@@ -35,7 +35,7 @@ class Artist
     }
 
     /**
-     * @return array
+     * @return Item[]
      */
     public function getItems(): array
     {
@@ -47,26 +47,11 @@ class Artist
      */
     public function getItemByID(int $index): Item
     {
-        $item = new Item(
-            $this->items[$index]['external_urls'],
-            $this->items[$index]['followers'],
-            $this->items[$index]['genres'],
-            $this->items[$index]['href'],
-            $this->items[$index]['id'],
-            $this->items[$index]['images'],
-            $this->items[$index]['name'],
-            $this->items[$index]['popularity'],
-            $this->items[$index]['type'],
-            $this->items[$index]['uri']
-        );
-        if ($item == null) {
-            throw new \Exception('Invalid index, item does not exist');
-        }
-        return $item;
+        return Item::fromJson($this->items[$index]);
     }
 
     /**
-     * @param array $items
+     * @param Item[] $items
      */
     public function setItems(array $items): void
     {
@@ -152,6 +137,21 @@ class Artist
     {
         $this->total = $total;
     }
+
+    public static function fromJson(\stdClass $data): self
+	{
+		return new self(
+			$data->href,
+			array_map(static function($data) {
+				return Item::fromJson($data);
+			}, $data->items),
+			$data->limit,
+			$data->next ?? null,
+			$data->offset,
+			$data->previous ?? null,
+			$data->total
+		);
+	}
 
     public function display(): string {
         $divs = '';

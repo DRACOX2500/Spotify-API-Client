@@ -43,4 +43,16 @@ class Follower
     {
         $this->total = $total;
     }
+
+    /**
+	 * @param array $data
+	 * @return self
+	 */
+	public static function fromJson(array $data): self
+	{
+		return new self(
+			$data['href'] ?? null,
+			$data['total']
+		);
+	}
 }
