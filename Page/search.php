@@ -17,15 +17,7 @@ curl_close($ch);
 
 $json = json_decode($result, true);
 
-$artist = new Artist(
-    $json['artists']['href'],
-    $json['artists']['items'],
-    $json['artists']['limit'],
-    $json['artists']['next'],
-    $json['artists']['offset'],
-    $json['artists']['previous'],
-    $json['artists']['total'],
-);
+$artist = Artist::fromJson($json['artists']);
 
 ?>
 

@@ -1,180 +1,208 @@
 <?php
 namespace App\Entity;
 
-use App\Entity\Item;
+use App\Entity\ExternalUrl;
+use App\Entity\Follower;
+use App\Entity\Image;
 
-class Artist
+class Item
 {
 
+    private ExternalUrl $external_urls;
+    private Follower $followers;
+
     public function __construct(
-        private string $hrefs,
-        private array $items,
-        private int $limit,
-        private $next,
-        private int $offset,
-        private $previous,
-        private int $total,
+        $external_urls,
+        $followers,
+        private array $genres,
+        private string $href,
+        private string $id,
+        private array $images,
+        private string $name,
+        private int $popularity,
+        private string $type,
+        private string $uri,
     )
     {
+        $this->external_urls = ExternalUrl::fromJson($external_urls);
+        $this->followers = Follower::fromJson($followers);
+    }
+
+    /**
+     * @return ExternalUrl
+     */
+    public function getExternalUrls(): ExternalUrl
+    {
+        return $this->external_urls;
+    }
+
+    /**
+     * @param ExternalUrl $external_urls
+     */
+    public function setExternalUrls(ExternalUrl $external_urls): void
+    {
+        $this->external_urls = $external_urls;
+    }
+
+    /**
+     * @return Follower
+     */
+    public function getFollowers(): Follower
+    {
+        return $this->followers;
+    }
+
+    /**
+     * @param Follower $followers
+     */
+    public function setFollowers(Follower $followers): void
+    {
+        $this->followers = $followers;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGenres(): array
+    {
+        return $this->genres;
+    }
+
+    /**
+     * @param array $genres
+     */
+    public function setGenres(array $genres): void
+    {
+        $this->genres = $genres;
     }
 
     /**
      * @return string
      */
-    public function getHrefs(): string
+    public function getHref(): string
     {
-        return $this->hrefs;
+        return $this->href;
     }
 
     /**
-     * @param string $hrefs
+     * @param string $href
      */
-    public function setHrefs(string $hrefs): void
+    public function setHref(string $href): void
     {
-        $this->hrefs = $hrefs;
+        $this->href = $href;
     }
 
     /**
-     * @return Item[]
+     * @return string
      */
-    public function getItems(): array
+    public function getId(): string
     {
-        return $this->items;
+        return $this->id;
     }
 
     /**
-     * @return Item
+     * @param string $id
      */
-    public function getItemByID(int $index): Item
+    public function setId(string $id): void
     {
-        return Item::fromJson($this->items[$index]);
+        $this->id = $id;
     }
 
     /**
-     * @param Item[] $items
+     * @return Image[]
      */
-    public function setItems(array $items): void
+    public function getImages(): array
     {
-        $this->items = $items;
+        return $this->images;
     }
 
     /**
-     * @return int
+     * @param Image[] $images
      */
-    public function getLimit(): int
+    public function setImages(array $images): void
     {
-        return $this->limit;
+        $this->images = $images;
     }
 
     /**
-     * @param int $limit
+     * @return string
      */
-    public function setLimit(int $limit): void
+    public function getName(): string
     {
-        $this->limit = $limit;
+        return $this->name;
     }
 
     /**
-     * @return mixed
+     * @param string $name
      */
-    public function getNext()
+    public function setName(string $name): void
     {
-        return $this->next;
-    }
-
-    /**
-     * @param mixed $next
-     */
-    public function setNext($next): void
-    {
-        $this->next = $next;
+        $this->name = $name;
     }
 
     /**
      * @return int
      */
-    public function getOffset(): int
+    public function getPopularity(): int
     {
-        return $this->offset;
+        return $this->popularity;
     }
 
     /**
-     * @param int $offset
+     * @param int $popularity
      */
-    public function setOffset(int $offset): void
+    public function setPopularity(int $popularity): void
     {
-        $this->offset = $offset;
+        $this->popularity = $popularity;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPrevious()
+    public function getType(): string
     {
-        return $this->previous;
+        return $this->type;
     }
 
     /**
-     * @param mixed $previous
+     * @param string $type
      */
-    public function setPrevious($previous): void
+    public function setType(string $type): void
     {
-        $this->previous = $previous;
+        $this->type = $type;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getTotal(): int
+    public function getUri(): string
     {
-        return $this->total;
+        return $this->uri;
     }
 
     /**
-     * @param int $total
+     * @param string $uri
      */
-    public function setTotal(int $total): void
+    public function setUri(string $uri): void
     {
-        $this->total = $total;
+        $this->uri = $uri;
     }
 
     public static function fromJson(\stdClass $data): self
 	{
 		return new self(
+			ExternalUrl::fromJson($data->external_urls),
+			Follower::fromJson($data->followers),
+			$data->genres,
 			$data->href,
+			$data->id,
 			array_map(static function($data) {
-				return Item::fromJson($data);
-			}, $data->items),
-			$data->limit,
-			$data->next ?? null,
-			$data->offset,
-			$data->previous ?? null,
-			$data->total
+				return Image::fromJson($data);
+			}, $data->images),
+			$data->name,
+			$data->popularity,
+			$data->type,
+			$data->uri
 		);
 	}
-
-    public function display(): string {
-        $divs = '';
-        for ($i = 0; $i < count($this->getItems()); $i++) {
-            $divs .= '<div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="'.$this->getItemByID($i)->getImages()[0]['url'].'" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">'.$this->getItemByID($i)->getName().'</h5>
-                            <p class="card-text">
-                                <span>Popularity</span>
-                                '.$this->getItemByID($i)->getPopularity().'
-                            </p>
-                            <p class="card-text">
-                                <span>Type</span>
-                                '.$this->getItemByID($i)->getType().'
-                            </p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>';
-        }
-        return $divs;
-    }
-
 }
