@@ -43,6 +43,29 @@ class Artist
     }
 
     /**
+     * @return array
+     */
+    public function getItemByID(int $index): Item
+    {
+        $item = new Item(
+            $this->items[$index]['external_urls'],
+            $this->items[$index]['followers'],
+            $this->items[$index]['genres'],
+            $this->items[$index]['href'],
+            $this->items[$index]['id'],
+            $this->items[$index]['images'],
+            $this->items[$index]['name'],
+            $this->items[$index]['popularity'],
+            $this->items[$index]['type'],
+            $this->items[$index]['uri']
+        );
+        if ($item == null) {
+            throw new \Exception('Invalid index, item does not exist');
+        }
+        return $item;
+    }
+
+    /**
      * @param array $items
      */
     public function setItems(array $items): void
@@ -133,7 +156,7 @@ class Artist
     public function display(): string {
         $divs = '';
         for ($i = 0; $i < count($this->getItems()); $i++) {
-            $image = $this->getItems()[0]['images'][0]['url'];
+            $image = $this->getItemByID(0)->getImages()[0]['url'];
             $name = $this->getItems()[0]['name'];
             $divs .= '<div class="card" style="width: 18rem;">
                 <img src="'.$this->getItems()[$i]['images'][0]['url'].'" class="card-img-top" alt="...">

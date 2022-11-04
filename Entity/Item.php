@@ -1,14 +1,18 @@
 <?php
 namespace App\Entity;
 
-use App\ExternalUrl\ExternalUrl;
-use App\Follower\Follower;
+use App\Entity\ExternalUrl;
+use App\Entity\Follower;
 
-class Item {
+class Item
+{
+
+    public ExternalUrl $external_urls;
+    public Follower $followers;
 
     public function __construct(
-        public ExternalUrl $external_urls,
-        public Follower $followers,
+        $external_urls,
+        $followers,
         public array $genres,
         public string $href,
         public string $id,
@@ -18,7 +22,13 @@ class Item {
         public string $type,
         public string $uri,
     )
-    {}
+    {
+        $this->external_urls = new ExternalUrl($external_urls['spotify']);
+        $this->followers = new Follower(
+            $followers['href'],
+            $followers['total']
+        ) ;
+    }
 
     /**
      * @return ExternalUrl
