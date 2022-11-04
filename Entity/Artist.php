@@ -43,7 +43,7 @@ class Artist
     }
 
     /**
-     * @return array
+     * @return Item
      */
     public function getItemByID(int $index): Item
     {
