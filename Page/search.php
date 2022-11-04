@@ -1,10 +1,10 @@
 <?php
 
-require 'auth-spotify.php';
-require 'Autoloader.php';
+require '../auth-spotify.php';
+require '../Autoloader.php';
 
 use App\Autoloader;
-use App\Entity\Artist;
+use App\Entity\ArtistSearch;
 
 Autoloader::register();
 
@@ -17,7 +17,7 @@ curl_close($ch);
 
 $json = json_decode($result, true);
 
-$artist = Artist::fromJson($json['artists']);
+$artist = ArtistSearch::fromJson($json['artists']);
 
 ?>
 
@@ -40,7 +40,7 @@ $artist = Artist::fromJson($json['artists']);
         <div class="container-fluid align-items-center" style="grid-template-columns: 1fr 2fr;">
 
             <div class="d-flex align-items-center">
-                <form action="./display.php" class="w-100 me-3 d-flex align-items-center flex-row justify-content-evenly" role="search">
+                <form action="search.php" class="w-100 me-3 d-flex align-items-center flex-row justify-content-evenly" role="search">
                     <input type="search" class="form-control w-75 p-2" placeholder="Search..." aria-label="Search">
 
                     <button type="submit" class="btn btn-primary p-2">Search</button>

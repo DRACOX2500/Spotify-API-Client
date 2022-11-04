@@ -1,9 +1,9 @@
 <?php
 namespace App\Entity;
 
-use App\Entity\Item;
+use App\Entity\Artist;
 
-class Artist
+class ArtistSearch
 {
 
     public function __construct(
@@ -35,7 +35,7 @@ class Artist
     }
 
     /**
-     * @return Item[]
+     * @return Artist[]
      */
     public function getItems(): array
     {
@@ -43,15 +43,16 @@ class Artist
     }
 
     /**
-     * @return Item
+     * @param int $index
+     * @return Artist
      */
-    public function getItemByID(int $index): Item
+    public function getItemByID(int $index): Artist
     {
-        return Item::fromJson($this->items[$index]);
+        return Artist::fromJson($this->items[$index]);
     }
 
     /**
-     * @param Item[] $items
+     * @param Artist[] $items
      */
     public function setItems(array $items): void
     {
@@ -77,7 +78,7 @@ class Artist
     /**
      * @return mixed
      */
-    public function getNext()
+    public function getNext(): mixed
     {
         return $this->next;
     }
@@ -85,7 +86,7 @@ class Artist
     /**
      * @param mixed $next
      */
-    public function setNext($next): void
+    public function setNext(mixed $next): void
     {
         $this->next = $next;
     }
@@ -109,7 +110,7 @@ class Artist
     /**
      * @return mixed
      */
-    public function getPrevious()
+    public function getPrevious(): mixed
     {
         return $this->previous;
     }
@@ -117,7 +118,7 @@ class Artist
     /**
      * @param mixed $previous
      */
-    public function setPrevious($previous): void
+    public function setPrevious(mixed $previous): void
     {
         $this->previous = $previous;
     }
@@ -143,7 +144,7 @@ class Artist
 		return new self(
 			$data->href,
 			array_map(static function($data) {
-				return Item::fromJson($data);
+				return Artist::fromJson($data);
 			}, $data->items),
 			$data->limit,
 			$data->next ?? null,

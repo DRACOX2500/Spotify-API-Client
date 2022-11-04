@@ -5,7 +5,7 @@ use App\Entity\ExternalUrl;
 use App\Entity\Follower;
 use App\Entity\Image;
 
-class Item
+class Artist
 {
 
     private ExternalUrl $external_urls;

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require "Envloader.php";
+require "DotEnv.php";
 use App\DotEnv;
 
 (new DotEnv(__DIR__ . '/.env'))->load();
