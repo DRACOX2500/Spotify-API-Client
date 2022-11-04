@@ -1,6 +1,6 @@
 <?php
 
-require 'Auth-Spotify.php';
+require 'auth-spotify.php';
 require 'Autoloader.php';
 
 use App\Autoloader;

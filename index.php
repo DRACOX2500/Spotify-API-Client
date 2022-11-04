@@ -1,6 +1,6 @@
 <?php
 
-require 'Auth-Spotify.php';
+require 'auth-spotify.php';
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/search?q=alestorm&type=artist");
