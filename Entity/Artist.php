@@ -156,19 +156,21 @@ class Artist
     public function display(): string {
         $divs = '';
         for ($i = 0; $i < count($this->getItems()); $i++) {
-            $divs .= '<div class="card" style="width: 18rem;">
-                <img src="'.$this->getItemByID($i)->getImages()[0]['url'].'" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">'.$this->getItemByID($i)->getName().'</h5>
-                        <p class="card-text">
-                            <span>Popularity</span>
-                            '.$this->getItemByID($i)->getPopularity().'
-                        </p>
-                        <p class="card-text">
-                            <span>Type</span>
-                            '.$this->getItemByID($i)->getType().'
-                        </p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+            $divs .= '<div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img src="'.$this->getItemByID($i)->getImages()[0]['url'].'" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">'.$this->getItemByID($i)->getName().'</h5>
+                            <p class="card-text">
+                                <span>Popularity</span>
+                                '.$this->getItemByID($i)->getPopularity().'
+                            </p>
+                            <p class="card-text">
+                                <span>Type</span>
+                                '.$this->getItemByID($i)->getType().'
+                            </p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
                 </div>
             </div>';
         }

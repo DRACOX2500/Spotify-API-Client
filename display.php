@@ -44,11 +44,26 @@ $artist = new Artist(
 </head>
 
 <body>
-    <header>
+    <header class="py-3 mb-3 border-bottom">
+        <div class="container-fluid align-items-center" style="grid-template-columns: 1fr 2fr;">
 
+            <div class="d-flex align-items-center">
+                <form action="./display.php" class="w-100 me-3 d-flex align-items-center flex-row justify-content-evenly" role="search">
+                    <input type="search" class="form-control w-75 p-2" placeholder="Search..." aria-label="Search">
+
+                    <button type="submit" class="btn btn-primary p-2">Search</button>
+                </form>
+            </div>
+        </div>
     </header>
     <main>
-        <?= $artist->display() ?>
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <?= $artist->display() ?>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 
