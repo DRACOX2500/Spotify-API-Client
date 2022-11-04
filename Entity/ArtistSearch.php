@@ -48,7 +48,7 @@ class ArtistSearch
      */
     public function getItemByID(int $index): Artist
     {
-        return Artist::fromJson($this->items[$index]);
+        return $this->items[$index];
     }
 
     /**
@@ -139,27 +139,32 @@ class ArtistSearch
         $this->total = $total;
     }
 
-    public static function fromJson(\stdClass $data): self
+    public static function fromJson(array $data): self
 	{
 		return new self(
-			$data->href,
-			array_map(static function($data) {
-				return Artist::fromJson($data);
-			}, $data->items),
-			$data->limit,
-			$data->next ?? null,
-			$data->offset,
-			$data->previous ?? null,
-			$data->total
+			$data['href'],
+            array_map(static function($data) {
+                return Artist::fromJson($data);
+            }, $data['items']),
+			$data['limit'],
+			$data['next'] ?? null,
+			$data['offset'],
+			$data['previous'] ?? null,
+			$data['total']
 		);
 	}
 
-    public function display(): string {
+    public function toHTML(?string $class = ""): string {
         $divs = '';
         for ($i = 0; $i < count($this->getItems()); $i++) {
+            $image = "/assets/spotify.jpg";
+            if (count($this->getItemByID($i)->getImage()) > 0) {
+                $image = $this->getItemByID($i)->getImage()[0]->getUrl();
+            }
+
             $divs .= '<div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="'.$this->getItemByID($i)->getImages()[0]['url'].'" class="card-img-top" alt="...">
+                <div id="'.$this->getItemByID($i)->getId().'" class="card '.$class.'" style="width: 18rem;">
+                    <img src="'. $image .'" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">'.$this->getItemByID($i)->getName().'</h5>
                             <p class="card-text">
@@ -170,7 +175,7 @@ class ArtistSearch
                                 <span>Type</span>
                                 '.$this->getItemByID($i)->getType().'
                             </p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <a href="#" class="btn btn-primary">More details...</a>
                     </div>
                 </div>
             </div>';

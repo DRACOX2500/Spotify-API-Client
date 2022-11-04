@@ -1,2 +1,9 @@
+# IDE
 .idea
+
+# ENV
 .env
+
+#Style
+theme/*.css
+theme/*.map

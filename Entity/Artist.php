@@ -8,56 +8,51 @@ use App\Entity\Image;
 class Artist
 {
 
-    private ExternalUrl $external_urls;
-    private Follower $followers;
-
     public function __construct(
-        $external_urls,
-        $followers,
-        private array $genres,
-        private string $href,
-        private string $id,
-        private array $images,
-        private string $name,
-        private int $popularity,
-        private string $type,
-        private string $uri,
+        private ExternalUrl $externalUrl,
+        private Follower    $follower,
+        private array       $genres,
+        private string      $href,
+        private string      $id,
+        private array       $image,
+        private string      $name,
+        private int         $popularity,
+        private string      $type,
+        private string      $uri,
     )
     {
-        $this->external_urls = ExternalUrl::fromJson($external_urls);
-        $this->followers = Follower::fromJson($followers);
     }
 
     /**
      * @return ExternalUrl
      */
-    public function getExternalUrls(): ExternalUrl
+    public function getExternalUrl(): ExternalUrl
     {
-        return $this->external_urls;
+        return $this->externalUrl;
     }
 
     /**
-     * @param ExternalUrl $external_urls
+     * @param ExternalUrl $externalUrl
      */
-    public function setExternalUrls(ExternalUrl $external_urls): void
+    public function setExternalUrl(ExternalUrl $externalUrl): void
     {
-        $this->external_urls = $external_urls;
+        $this->externalUrl = $externalUrl;
     }
 
     /**
      * @return Follower
      */
-    public function getFollowers(): Follower
+    public function getFollower(): Follower
     {
-        return $this->followers;
+        return $this->follower;
     }
 
     /**
-     * @param Follower $followers
+     * @param Follower $follower
      */
-    public function setFollowers(Follower $followers): void
+    public function setFollower(Follower $follower): void
     {
-        $this->followers = $followers;
+        $this->follower = $follower;
     }
 
     /**
@@ -111,17 +106,17 @@ class Artist
     /**
      * @return Image[]
      */
-    public function getImages(): array
+    public function getImage(): array
     {
-        return $this->images;
+        return $this->image;
     }
 
     /**
-     * @param Image[] $images
+     * @param Image[] $image
      */
-    public function setImages(array $images): void
+    public function setImage(array $image): void
     {
-        $this->images = $images;
+        $this->image = $image;
     }
 
     /**
@@ -188,21 +183,25 @@ class Artist
         $this->uri = $uri;
     }
 
-    public static function fromJson(\stdClass $data): self
-	{
-		return new self(
-			ExternalUrl::fromJson($data->external_urls),
-			Follower::fromJson($data->followers),
-			$data->genres,
-			$data->href,
-			$data->id,
-			array_map(static function($data) {
-				return Image::fromJson($data);
-			}, $data->images),
-			$data->name,
-			$data->popularity,
-			$data->type,
-			$data->uri
-		);
-	}
+    /**
+     * @param array $data
+     * @return self
+     */
+    public static function fromJson(array $data): self
+    {
+        return new self(
+            ExternalUrl::fromJson($data['external_urls']),
+            Follower::fromJson($data['followers']),
+            $data['genres'],
+            $data['href'],
+            $data['id'],
+            array_map(static function($data) {
+                return Image::fromJson($data);
+            }, $data['images']),
+            $data['name'],
+            $data['popularity'],
+            $data['type'],
+            $data['uri']
+        );
+    }
 }
