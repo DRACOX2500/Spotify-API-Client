@@ -1,0 +1,23 @@
+$theme: (
+        main: #121212,
+        secondary: #18d860
+);
+
+$main: (
+        main: map-get($theme, main),
+        darker: #000
+);
+
+.bg-main {
+    background-color: map-get($main, main);
+    color: white;
+}
+
+.bg-main-darker {
+    background-color: map-get($main, darker);
+    color: white;
+}
+
+.bg-secondary {
+    background-color: map-get($theme, secondary) !important;
+}

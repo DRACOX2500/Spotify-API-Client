@@ -70,26 +70,25 @@ $artist = ArtistSearch::fromJson($json['artists']) ?? array();
         </div>
     </header>
 
-    <aside>
-        <div id="aside-menu" class="flex-shrink-0 p-3 bg-dark draggable" style="width: 280px;">
-            <h1 class="fs-1 fw-semibold text-light pb-3 mb-3 border-bottom"></h1>
-            <img src="#" alt="artist image">
-            <ul class="list-unstyled mb-0">
-                <li><span class="fs-4 dropdown-item d-flex align-items-center gap-2 py-2 text-light" href="#">
-                        <span class="d-inline-block bg-light rounded-circle p-1"></span>
-                        <span class="fw-bold">Followers : </span>
-                        <p></p>
-                    </span></li>
-                <li><span class="fs-4 dropdown-item d-flex align-items-center gap-2 py-2 text-light" href="#">
-                        <span class="d-inline-block bg-light rounded-circle p-1"></span>
-                        <span class="fw-bold">Popularity : </span>
-                        <p></p>
-                    </span></li>
-            </ul>
-        </div>
-    </aside>
-
     <main class="bg-main">
+        <aside>
+            <div id="aside-menu" class="flex-shrink-0 p-3 bg-dark draggable">
+                <h1 class="fs-1 fw-semibold text-light pb-3 mb-3 border-bottom"></h1>
+                <img src="#" alt="artist image">
+
+                <div class="d-flex flex-row justify-content-evenly py-4">
+                    <div class="stats fs-4  d-flex flex-column bg-main p-4 rounded">
+                        <span class="fw-bold">Followers : </span>
+                        <span class="followers-value"></span>
+                    </div>
+                    <div class="stats fs-4  d-flex flex-column bg-main p-4 rounded">
+                        <span class="fw-bold">Popularity : </span>
+                        <span class="popularity-value"></span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
         <div class="album">
             <div class="container py-5">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -114,7 +113,7 @@ $artist = ArtistSearch::fromJson($json['artists']) ?? array();
         const cardButtons = document.getElementsByClassName('card-btn');
         const asideMenu = document.getElementById('aside-menu');
 
-        function showHint() {
+        function showArtist() {
             const id = this.parentNode.parentElement.id
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
@@ -127,8 +126,8 @@ $artist = ArtistSearch::fromJson($json['artists']) ?? array();
                 console.log(asideMenu.children[0])
                 asideMenu.children[0].textContent = result.name;
                 asideMenu.children[1].src = result.images[0].url;
-                asideMenu.children[2].children[0].firstChild.lastChild.textContent = result.followers.total;
-                asideMenu.children[2].children[1].firstChild.lastChild.textContent = result.popularity;
+                asideMenu.getElementsByClassName('followers-value')[0].textContent = result.followers.total;
+                asideMenu.getElementsByClassName('popularity-value')[0].textContent = result.popularity;
 
             };
             xmlhttp.open("GET", "/Ajax/spotify-search-artist.php?artist_id=" + id, true);
@@ -137,7 +136,7 @@ $artist = ArtistSearch::fromJson($json['artists']) ?? array();
         }
 
         for (let cardButton of cardButtons) {
-            cardButton.addEventListener('click', showHint);
+            cardButton.addEventListener('click', showArtist);
         }
     </script>
 </body>
