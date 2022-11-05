@@ -2,6 +2,27 @@
 @import "aside";
 @import "loading";
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: map-get($theme, main);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: map-get($secondary, main);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background:map-get($secondary, darker);
+}
+
 header {
   position: sticky;
   top: 0;

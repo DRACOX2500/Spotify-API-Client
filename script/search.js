@@ -3,6 +3,8 @@ const searchList = document.getElementById('search-list');
 const searchBtn = document.getElementById('search-btn');
 const searchBar = document.getElementById('search-bar');
 
+searchBar.value = 'alestorm'
+
 const artistAside = new bootstrap.Offcanvas(
 	document.getElementById('aside-menu')
 )
@@ -41,7 +43,7 @@ function search(query, type = 'artist') {
 	)
 }
 
-search('alestorm');
+search(searchBar.value);
 searchBtn.addEventListener('click', () => {
 	if (searchBar.value.length <= 0) return
 	search(searchBar.value)
