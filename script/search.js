@@ -5,6 +5,8 @@ const searchBar = document.getElementById('search-bar');
 
 searchBar.value = 'alestorm'
 
+const artistCache = new Map();
+
 const artistAside = new bootstrap.Offcanvas(
 	document.getElementById('aside-menu')
 )
@@ -51,20 +53,24 @@ searchBtn.addEventListener('click', () => {
 
 function showArtist() {
 	const id = this.parentNode.parentElement.id;
-	ajax(
-		'/Ajax/spotify-artist.php?format=html&artist_id=' + id,
-		function () {
-			if (!this.responseText) return;
-			asideMenu.innerHTML = this.responseText;
-
-			const closeAsideBtn = document.getElementsByClassName('close-aside')[0];
-			if (closeAsideBtn) closeAsideBtn.addEventListener('click', () => {
-				asideMenu.style.left = '0';
-			})
-
-			// asideMenu.parentElement.classList.add('show');
-			// asideMenu.style.left = '490px';
+	const value = artistCache.get(id);
+	if (value) {
+		((response) => {
+			if (!response) return;
+			asideMenu.innerHTML = response;
 			artistAside.show();
-		}
-	)
+		})(value)
+	}
+	else {
+		ajax(
+			'/Ajax/spotify-artist.php?format=html&artist_id=' + id,
+			function () {
+				if (!this.responseText) return;
+				artistCache.set(id, this.responseText);
+				asideMenu.innerHTML = this.responseText;
+				artistAside.show();
+			}
+		)
+	}
+	
 }
