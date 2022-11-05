@@ -1,0 +1,75 @@
+@import "theme";
+@import "aside";
+@import "loading";
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: map-get($theme, main);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: map-get($secondary, main);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background:map-get($secondary, darker);
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+main {
+  min-height: calc(100vh - 82px);
+}
+
+.header-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.artist-card {
+  transition: all .2s ease-out;
+  animation: summon 1s;
+
+  &:hover {
+    -webkit-box-shadow: 0 20px 40px rgba(map-get($theme, secondary),.3);
+    box-shadow: 0 20px 40px rgba(map-get($theme, secondary),.3);
+    -webkit-transform: translateY(-15px);
+    -moz-transform: translateY(-15px);
+    -ms-transform: translateY(-15px);
+    -o-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+
+  img {
+    border-radius: 50%;
+    width: 80%;
+    align-self: center;
+    margin-block: 15px;
+    border: solid 2px map-get($theme, secondary);
+    object-fit: cover;
+    object-position: center;
+    max-height: 228px;
+    max-width: 228px;
+  }
+}
+
+@keyframes summon {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

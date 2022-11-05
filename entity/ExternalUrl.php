@@ -6,7 +6,7 @@ class ExternalUrl
 {
 
     public function __construct(
-        public string $spotify,
+        private string $spotify,
     )
     {
     }
@@ -26,4 +26,15 @@ class ExternalUrl
     {
         $this->spotify = $spotify;
     }
+
+    /**
+	 * @param array $data
+	 * @return self
+	 */
+	public static function fromJson(array $data): self
+	{
+		return new self(
+			$data['spotify']
+		);
+	}
 }

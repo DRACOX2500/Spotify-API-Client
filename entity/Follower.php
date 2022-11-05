@@ -6,8 +6,8 @@ class Follower
 {
 
     public function __construct(
-        public ?string $href,
-        public int $total,
+        private ?string $href,
+        private int $total,
     )
     {
     }
@@ -43,4 +43,16 @@ class Follower
     {
         $this->total = $total;
     }
+
+    /**
+	 * @param array $data
+	 * @return self
+	 */
+	public static function fromJson(array $data): self
+	{
+		return new self(
+			$data['href'] ?? null,
+			$data['total']
+		);
+	}
 }

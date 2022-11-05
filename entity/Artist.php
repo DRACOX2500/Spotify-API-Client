@@ -1,55 +1,55 @@
 <?php
+
 namespace App\Entity;
 
-use App\ExternalUrl\ExternalUrl;
-use App\Follower\Follower;
-
-class Item {
+class Artist
+{
 
     public function __construct(
-        public ExternalUrl $external_urls,
-        public Follower $followers,
-        public array $genres,
-        public string $href,
-        public string $id,
-        public array $images,
-        public string $name,
-        public int $popularity,
-        public string $type,
-        public string $uri,
+        private ExternalUrl $externalUrl,
+        private ?Follower    $follower,
+        private ?array       $genres,
+        private string      $href,
+        private string      $id,
+        private ?array       $image,
+        private string      $name,
+        private ?int         $popularity,
+        private string      $type,
+        private string      $uri,
     )
-    {}
+    {
+    }
 
     /**
      * @return ExternalUrl
      */
-    public function getExternalUrls(): ExternalUrl
+    public function getExternalUrl(): ExternalUrl
     {
-        return $this->external_urls;
+        return $this->externalUrl;
     }
 
     /**
-     * @param ExternalUrl $external_urls
+     * @param ExternalUrl $externalUrl
      */
-    public function setExternalUrls(ExternalUrl $external_urls): void
+    public function setExternalUrl(ExternalUrl $externalUrl): void
     {
-        $this->external_urls = $external_urls;
+        $this->externalUrl = $externalUrl;
     }
 
     /**
      * @return Follower
      */
-    public function getFollowers(): Follower
+    public function getFollower(): Follower
     {
-        return $this->followers;
+        return $this->follower;
     }
 
     /**
-     * @param Follower $followers
+     * @param Follower $follower
      */
-    public function setFollowers(Follower $followers): void
+    public function setFollower(Follower $follower): void
     {
-        $this->followers = $followers;
+        $this->follower = $follower;
     }
 
     /**
@@ -101,19 +101,19 @@ class Item {
     }
 
     /**
-     * @return array
+     * @return Image[]
      */
-    public function getImages(): array
+    public function getImage(): array
     {
-        return $this->images;
+        return $this->image;
     }
 
     /**
-     * @param array $images
+     * @param Image[] $image
      */
-    public function setImages(array $images): void
+    public function setImage(array $image): void
     {
-        $this->images = $images;
+        $this->image = $image;
     }
 
     /**
@@ -178,5 +178,27 @@ class Item {
     public function setUri(string $uri): void
     {
         $this->uri = $uri;
+    }
+
+    /**
+     * @param array $data
+     * @return self
+     */
+    public static function fromJson(array $data): self
+    {
+        return new self(
+            ExternalUrl::fromJson($data['external_urls']),
+            isset($data['followers']) ? Follower::fromJson($data['followers']) : null,
+            isset($data['genres']) ? $data['genres'] : null,
+            $data['href'],
+            $data['id'],
+            isset($data['images']) ? array_map(static function($data) {
+                return Image::fromJson($data);
+            }, $data['images']) : null,
+            $data['name'],
+            isset($data['popularity']) ? $data['popularity'] : null,
+            $data['type'],
+            $data['uri']
+        );
     }
 }

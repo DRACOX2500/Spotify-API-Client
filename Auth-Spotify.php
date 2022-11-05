@@ -1,7 +1,13 @@
 <?php
 session_start();
+
+require "DotEnv.php";
+use App\DotEnv;
+
+(new DotEnv(__DIR__ . '/.env'))->load();
+
 $newTokenNeeded = false;
-$_SESSION['expire'] = 0;
+// $_SESSION['expire'] = 0;
 if (empty($_SESSION)) {
     $newTokenNeeded = true;
 } else {
@@ -29,7 +35,6 @@ if ($newTokenNeeded) {
     $result = json_decode(curl_exec($ch), true);
     curl_close($ch);
 
-    $_SESSION['token'] = $result['access_token'];
-    //$_SESSION['token'] = "BQDkEGCaLAztivtK523qZajmgivleB0TXp-jMgZKuGCVn9oR7hM1nf5f-XMhsL_dp8Xv9PKOZtUZmb0RApa8PCy1QXESenaWuHY7gNxmTi8MKYWVCtTfW3bdeSyL1z9UZCNAP2BHNBMUTm90X4yNGnzX1ovKsErHy9ls-0YUulGJN2X57YgjEmjqticwBTj-VQ";
+    $_SESSION['token'] = $result['access_token'] ?? getenv('TOKEN');
     $_SESSION['expire'] = time() + 3600;
 }
