@@ -166,16 +166,16 @@ class ArtistSearch
                 <div id="'.$this->getItemByID($i)->getId().'" class="card '.$class.'" style="width: 18rem;">
                     <img src="'. $image .'" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">'.$this->getItemByID($i)->getName().'</h5>
-                            <p class="card-text">
-                                <span>Popularity</span>
-                                '.$this->getItemByID($i)->getPopularity().'
-                            </p>
-                            <p class="card-text">
-                                <span>Type</span>
-                                '.$this->getItemByID($i)->getType().'
-                            </p>
-                            <a href="#" class="btn btn-primary">More details...</a>
+                        <h5 class="card-title fw-bold">'.$this->getItemByID($i)->getName().'</h5>
+                        <p class="card-text text-secondary fs-5">
+                            '.ucfirst($this->getItemByID($i)->getType()).'
+                        </p>
+                        <button type="button"
+                            href="#"
+                            class="btn bg-secondary stretched-link w-75 d-flex flex-row align-items-center card-btn">
+                            <i class="bi bi-plus-square-fill p-2"></i>
+                            More details...
+                        </button>
                     </div>
                 </div>
             </div>';

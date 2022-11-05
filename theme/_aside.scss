@@ -1,0 +1,27 @@
+aside {
+    display: none;
+    position: fixed;
+    height: 100%;
+    z-index: 2;
+
+    &.show {
+        display: flex;
+    }
+
+    width: 990px;
+    left: -490px;
+
+    #aside-menu {
+        border-right: solid 10px #18d860;
+        width: 500px !important;
+        z-index: 2;
+    }
+
+    img {
+        width: 300px;
+        margin-inline: calc((100% - 300px) / 2);
+        border-radius: 50%;
+        align-self: center;
+        border: solid 2px #18d860;
+    }
+}
