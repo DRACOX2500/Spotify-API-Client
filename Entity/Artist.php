@@ -1,9 +1,6 @@
 <?php
-namespace App\Entity;
 
-use App\Entity\ExternalUrl;
-use App\Entity\Follower;
-use App\Entity\Image;
+namespace App\Entity;
 
 class Artist
 {

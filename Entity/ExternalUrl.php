@@ -6,7 +6,7 @@ class ExternalUrl
 {
 
     public function __construct(
-        public string $spotify,
+        private string $spotify,
     )
     {
     }

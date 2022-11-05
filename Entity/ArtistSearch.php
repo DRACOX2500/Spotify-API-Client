@@ -1,7 +1,6 @@
 <?php
-namespace App\Entity;
 
-use App\Entity\Artist;
+namespace App\Entity;
 
 class ArtistSearch
 {

@@ -73,19 +73,7 @@ $artist = ArtistSearch::fromJson($json['artists']) ?? array();
     <main class="bg-main">
         <aside>
             <div id="aside-menu" class="flex-shrink-0 p-3 bg-dark draggable">
-                <h1 class="fs-1 fw-semibold text-light pb-3 mb-3 border-bottom"></h1>
-                <img src="#" alt="artist image">
 
-                <div class="d-flex flex-row justify-content-evenly py-4">
-                    <div class="stats fs-4  d-flex flex-column bg-main p-4 rounded">
-                        <span class="fw-bold">Followers : </span>
-                        <span class="followers-value"></span>
-                    </div>
-                    <div class="stats fs-4  d-flex flex-column bg-main p-4 rounded">
-                        <span class="fw-bold">Popularity : </span>
-                        <span class="popularity-value"></span>
-                    </div>
-                </div>
             </div>
         </aside>
 
@@ -118,19 +106,13 @@ $artist = ArtistSearch::fromJson($json['artists']) ?? array();
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (!this.responseText) return
-                const result = JSON.parse(this.responseText);
+                asideMenu.innerHTML = this.responseText
+
                 asideMenu.parentElement.classList.add('show');
                 asideMenu.style.left = '490px';
 
-                console.log('JSON', result)
-                console.log(asideMenu.children[0])
-                asideMenu.children[0].textContent = result.name;
-                asideMenu.children[1].src = result.images[0].url;
-                asideMenu.getElementsByClassName('followers-value')[0].textContent = result.followers.total;
-                asideMenu.getElementsByClassName('popularity-value')[0].textContent = result.popularity;
-
             };
-            xmlhttp.open("GET", "/Ajax/spotify-search-artist.php?artist_id=" + id, true);
+            xmlhttp.open("GET", "/Ajax/spotify-artist.php?format=html&artist_id=" + id, true);
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlhttp.send();
         }
