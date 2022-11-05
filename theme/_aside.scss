@@ -43,5 +43,23 @@ aside {
                 transform: translateY(-5px);
             }
         }
+
+        .close-aside {
+            position: absolute;
+            right: 20px;
+            display: flex;
+            background-color: #0000;
+            border: none;
+            top: 5px;
+
+            i {
+                font-size: 45px;
+                color: darkgray;
+
+                &:hover {
+                    color: #686868;
+                }
+            }
+        }
     }
 }

@@ -24,8 +24,10 @@ if (!empty($_GET) && !empty($_GET['artist_id'])) {
         if (count($artist->getImage()) > 0) {
             $image = $artist->getImage()[0]->getUrl();
         }
-        echo '<h1 class="fs-1 fw-semibold text-light pb-3 mb-3 border-bottom">'.$artist->getName().'</h1>
-                <a href="'.$artist->getExternalUrl()->getSpotify().'">
+        echo '
+                <button type="button" class="close-aside"><i class="bi bi-x-circle-fill"></i></button>
+                <h1 class="fs-1 fw-semibold text-light pb-3 mb-3 border-bottom">'.$artist->getName().'</h1>
+                <a href="'.$artist->getExternalUrl()->getSpotify().'" target="_blank">
                     <img src="'.$image.'" alt="artist image">
                 </a>
 
