@@ -22,6 +22,11 @@ aside {
             border-radius: 50%;
             align-self: center;
             border: solid 2px #18d860;
+
+            &:hover {
+                border: solid 4px #18d860;
+                cursor: pointer;
+            }
         }
 
         .stats {
