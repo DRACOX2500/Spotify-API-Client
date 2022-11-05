@@ -7,6 +7,7 @@ const searchBar = document.getElementById('search-bar');
 searchBar.value = 'alestorm'
 
 const artistCache = new Map();
+const albumsCache = new Map();
 
 const artistAside = new bootstrap.Offcanvas(asideMenu)
 
@@ -54,14 +55,27 @@ searchBtn.addEventListener('click', () => {
 
 function showAlbums(artistID) {
 	if (!artistID || typeof artistID !== 'string') return;
-	ajax(
-		'/ajax/spotify-artist-album.php?artist_id=' + artistID,
-		function () {
-			if (!this.responseText) return;
-			asideMenuAlbum.innerHTML = this.response;
-			albumAside.show()
-		}
-	)
+	const value = albumsCache.get(artistID);
+	const open = (response) => {
+		if (!response) return;
+		asideMenuAlbum.innerHTML = response;
+		albumAside.show();
+	}
+
+
+	if (value) {
+		open(value);
+	}
+	else {
+		ajax(
+			'/ajax/spotify-artist-album.php?artist_id=' + artistID,
+			function () {
+				if (!this.responseText) return;
+				asideMenuAlbum.innerHTML = this.response;
+				albumAside.show()
+			}
+		)
+	}
 }
 
 function showArtist() {
