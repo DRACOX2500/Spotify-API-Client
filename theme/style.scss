@@ -19,6 +19,7 @@ main {
 
 .artist-card {
   transition: all .2s ease-out;
+  animation: summon 1s;
 
   &:hover {
     -webkit-box-shadow: 0 20px 40px rgba(map-get($theme, secondary),.3);
@@ -40,5 +41,14 @@ main {
     object-position: center;
     max-height: 228px;
     max-width: 228px;
+  }
+}
+
+@keyframes summon {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
