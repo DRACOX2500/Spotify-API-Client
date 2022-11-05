@@ -3,19 +3,9 @@ const searchList = document.getElementById('search-list');
 const searchBtn = document.getElementById('search-btn');
 const searchBar = document.getElementById('search-bar');
 
-const observer = new MutationObserver(function(mutations) {
-	mutations.forEach(function(mutationRecord) {
-		console.log(+asideMenu.style.left.split('px')[0])
-		if (+asideMenu.style.left.split('px')[0] < 270) {
-			asideMenu.parentElement.classList.add('is-close')
-		}
-		else {
-			asideMenu.parentElement.classList.remove('is-close')
-		}
-	});
-});
-
-observer.observe(asideMenu, { attributes : true, attributeFilter : ['style'] });
+const artistAside = new bootstrap.Offcanvas(
+	document.getElementById('aside-menu')
+)
 
 function showLoading() {
 	searchList.innerHTML = '<div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
@@ -41,7 +31,6 @@ function search(query, type = 'artist') {
 		'/Ajax/spotify-search.php?q=' + query + '&type=' + type,
 		function () {
 			if (!this.responseText) return;
-			console.log(searchList)
 			searchList.innerHTML = this.responseText;
 
 			const cardButtons = document.getElementsByClassName('card-btn');
@@ -71,8 +60,9 @@ function showArtist() {
 				asideMenu.style.left = '0';
 			})
 
-			asideMenu.parentElement.classList.add('show');
-			asideMenu.style.left = '490px';
+			// asideMenu.parentElement.classList.add('show');
+			// asideMenu.style.left = '490px';
+			artistAside.show();
 		}
 	)
 }

@@ -38,10 +38,8 @@
     </header>
 
     <main class="bg-main">
-        <aside>
-            <div id="aside-menu" class="flex-shrink-0 p-3 bg-dark draggable">
+        <aside id="aside-menu" class="offcanvas offcanvas-start bg-main" tabindex="-1" aria-labelledby="offcanvasExampleLabel">
 
-            </div>
         </aside>
 
         <div class="album">
@@ -56,14 +54,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script>
-        $(function() {
-            $(".draggable").draggable({
-                appendTo: "body",
-                axis: "x",
-                containment: "parent",
-            });
-        });
-
         $("#search-form").submit(function(e) {
             e.preventDefault();
         });

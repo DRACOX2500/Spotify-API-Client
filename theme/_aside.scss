@@ -1,25 +1,8 @@
-aside {
-    display: none;
-    position: fixed;
-    height: 100%;
-    z-index: 2;
+#aside-menu {
+    border-right: solid 10px #18d860;
+    width: 500px;
 
-    &.show {
-        display: flex;
-    }
-
-    &.is-close {
-        width: 775px;
-    }
-
-    width: 990px;
-    left: -490px;
-
-    #aside-menu {
-        border-right: solid 10px #18d860;
-        width: 500px !important;
-        z-index: 2;
-
+    .offcanvas-body {
         img {
             width: 300px;
             margin-inline: calc((100% - 300px) / 2);
@@ -48,22 +31,9 @@ aside {
             }
         }
 
-        .close-aside {
-            position: absolute;
-            right: 20px;
-            display: flex;
-            background-color: #0000;
-            border: none;
-            top: 5px;
-
-            i {
-                font-size: 45px;
-                color: darkgray;
-
-                &:hover {
-                    color: #686868;
-                }
-            }
+        .badge-list {
+            max-height: 86px;
+            overflow: auto;
         }
     }
 }
