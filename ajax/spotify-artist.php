@@ -55,7 +55,7 @@ if (!empty($_GET) && !empty($_GET['artist_id'])) {
                     '.$badges.'
                 </div>
                 
-                <button type="button" class="album-list btn-secondary app-btn fs-3  rounded p-4 mt-4">
+                <button type="button" class="album-list-btn btn-secondary app-btn fs-3  rounded p-4 mt-4">
                     <span class="open-album"><i class="bi bi-music-note-list"></i></span>
                     <span class="fw-bold">Voir les Albums</span>
                 </button>

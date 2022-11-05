@@ -1,3 +1,17 @@
+@font-face {
+    font-family: "GothamMedium";
+    src: url("./font/GothamMedium.ttf")
+}
+
+@font-face {
+    font-family: "GothamBook";
+    src: url("./font/GothamBook.ttf")
+}
+
+* {
+    font-family: "GothamBook", sans-serif;
+}
+
 $theme: (
         main: #121212,
         secondary: #18d860

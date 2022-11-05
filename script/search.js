@@ -1,4 +1,5 @@
 const asideMenu = document.getElementById('aside-menu');
+const asideMenuAlbum = document.getElementById('aside-album-list');
 const searchList = document.getElementById('search-list');
 const searchBtn = document.getElementById('search-btn');
 const searchBar = document.getElementById('search-bar');
@@ -7,9 +8,9 @@ searchBar.value = 'alestorm'
 
 const artistCache = new Map();
 
-const artistAside = new bootstrap.Offcanvas(
-	document.getElementById('aside-menu')
-)
+const artistAside = new bootstrap.Offcanvas(asideMenu)
+
+const albumAside = new bootstrap.Offcanvas(asideMenuAlbum)
 
 function showLoading() {
 	searchList.innerHTML = '<div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
@@ -51,24 +52,45 @@ searchBtn.addEventListener('click', () => {
 	search(searchBar.value)
 })
 
+function showAlbums(artistID) {
+	if (!artistID || typeof artistID !== 'string') return;
+	ajax(
+		'/ajax/spotify-artist-album.php?artist_id=' + artistID,
+		function () {
+			if (!this.responseText) return;
+			asideMenuAlbum.innerHTML = this.response;
+			albumAside.show()
+		}
+	)
+}
+
 function showArtist() {
 	const id = this.parentNode.parentElement.id;
 	const value = artistCache.get(id);
+	const open = (response) => {
+		if (!response) return;
+		asideMenu.innerHTML = response;
+
+		const albumBtn = document.getElementsByClassName('album-list-btn')[0]
+		albumBtn.addEventListener('click', () => {
+			artistAside.hide()
+			showAlbums(id)
+		})
+
+		artistAside.show();
+	}
+
+
 	if (value) {
-		((response) => {
-			if (!response) return;
-			asideMenu.innerHTML = response;
-			artistAside.show();
-		})(value)
+		open(value);
 	}
 	else {
 		ajax(
-			'/Ajax/spotify-artist.php?format=html&artist_id=' + id,
+			'/ajax/spotify-artist.php?format=html&artist_id=' + id,
 			function () {
 				if (!this.responseText) return;
 				artistCache.set(id, this.responseText);
-				asideMenu.innerHTML = this.responseText;
-				artistAside.show();
+				open(this.responseText);
 			}
 		)
 	}

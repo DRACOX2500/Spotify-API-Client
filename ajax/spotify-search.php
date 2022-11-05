@@ -4,7 +4,7 @@ require '../auth-spotify.php';
 require '../Autoloader.php';
 
 use App\Autoloader;
-use App\Entity\ArtistSearch;
+use App\Entity\SpotifyAPIResult;
 
 Autoloader::register();
 
@@ -27,6 +27,6 @@ $result = curl_exec($ch);
 curl_close($ch);
 
 $json = json_decode($result, true);
-$artist = ArtistSearch::fromJson($json['artists']) ?? array();
+$artist = SpotifyAPIResult::fromJson($json['artists']) ?? array();
 
 echo $artist->toHTML('bg-main-darker artist-card');

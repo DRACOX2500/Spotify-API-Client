@@ -7,13 +7,13 @@ class Artist
 
     public function __construct(
         private ExternalUrl $externalUrl,
-        private Follower    $follower,
-        private array       $genres,
+        private ?Follower    $follower,
+        private ?array       $genres,
         private string      $href,
         private string      $id,
-        private array       $image,
+        private ?array       $image,
         private string      $name,
-        private int         $popularity,
+        private ?int         $popularity,
         private string      $type,
         private string      $uri,
     )
@@ -188,15 +188,15 @@ class Artist
     {
         return new self(
             ExternalUrl::fromJson($data['external_urls']),
-            Follower::fromJson($data['followers']),
-            $data['genres'],
+            isset($data['followers']) ? Follower::fromJson($data['followers']) : null,
+            isset($data['genres']) ? $data['genres'] : null,
             $data['href'],
             $data['id'],
-            array_map(static function($data) {
+            isset($data['images']) ? array_map(static function($data) {
                 return Image::fromJson($data);
-            }, $data['images']),
+            }, $data['images']) : null,
             $data['name'],
-            $data['popularity'],
+            isset($data['popularity']) ? $data['popularity'] : null,
             $data['type'],
             $data['uri']
         );
