@@ -8,6 +8,10 @@ aside {
         display: flex;
     }
 
+    &.is-close {
+        width: 775px;
+    }
+
     width: 990px;
     left: -490px;
 

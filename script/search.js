@@ -3,6 +3,20 @@ const searchList = document.getElementById('search-list');
 const searchBtn = document.getElementById('search-btn');
 const searchBar = document.getElementById('search-bar');
 
+const observer = new MutationObserver(function(mutations) {
+	mutations.forEach(function(mutationRecord) {
+		console.log(+asideMenu.style.left.split('px')[0])
+		if (+asideMenu.style.left.split('px')[0] < 270) {
+			asideMenu.parentElement.classList.add('is-close')
+		}
+		else {
+			asideMenu.parentElement.classList.remove('is-close')
+		}
+	});
+});
+
+observer.observe(asideMenu, { attributes : true, attributeFilter : ['style'] });
+
 function showLoading() {
 	searchList.innerHTML = '<div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
 }
