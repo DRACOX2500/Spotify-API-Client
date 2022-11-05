@@ -7,6 +7,10 @@ header {
   z-index: 3;
 }
 
+main {
+  min-height: calc(100vh - 82px);
+}
+
 .header-logo {
   width: 40px;
   height: 40px;
@@ -31,5 +35,9 @@ header {
     align-self: center;
     margin-block: 15px;
     border: solid 2px map-get($theme, secondary);
+    object-fit: cover;
+    object-position: center;
+    max-height: 228px;
+    max-width: 228px;
   }
 }

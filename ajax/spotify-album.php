@@ -12,4 +12,6 @@ if (!empty($_GET) && !empty($_GET['artist_id'])) {
     $result = curl_exec($ch);
     curl_close($ch);
     echo $result;
-} else echo '{}';
+} else {
+    echo '{}';
+}
