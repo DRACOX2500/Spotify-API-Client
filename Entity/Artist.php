@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-class Artist
+class Artist extends Model
 {
 
     public function __construct(

@@ -1,6 +1,6 @@
 <?php
 session_start();
-//require __DIR__.'/../../Core/AuthSpotify.php';
+
 require __DIR__.'/../../Autoloader.php';
 
 use App\Autoloader;

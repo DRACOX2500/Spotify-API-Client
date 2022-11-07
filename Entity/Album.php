@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-class Album
+class Album extends Model
 {
     /**
      * @param string $albumGroup

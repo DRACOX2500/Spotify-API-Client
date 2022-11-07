@@ -1,6 +1,6 @@
 <?php
 session_start();
-//require '../auth-spotify.php';
+
 require __DIR__.'/../../Autoloader.php';
 
 use App\Autoloader;
