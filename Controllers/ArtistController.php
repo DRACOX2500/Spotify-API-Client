@@ -22,14 +22,14 @@ class ArtistController extends Controller
 
     }
 
-    public function html(): void
+    public function ajax(): void
     {
         $artistId = Utils::getParams()[2];
 
         if (isset($artistId)) {
             $result = self::getArtist($artistId);
             $artist = Artist::fromJson(json_decode($result, true));
-            $this->render('artist/profile', compact('artist'), 'empty');
+            $this->render('artist/ajax', compact('artist'), 'empty');
         }
         else
         {
