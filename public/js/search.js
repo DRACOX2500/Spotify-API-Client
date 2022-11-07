@@ -87,7 +87,6 @@ function showAlbums(artistID, callback) {
 			function () {
 				if (!this.responseText) return;
 				albumsCache.set(artistID, this.responseText);
-				console.log('ok')
 				open(this.responseText);
 			}
 		)
