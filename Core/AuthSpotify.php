@@ -19,7 +19,7 @@ class AuthSpotify
 
         if ($newTokenNeeded) {
 
-            (new DotEnv(__DIR__ . '/.env'))->load();
+            (new DotEnv(__DIR__ . '/../.env'))->load();
             $clientId = getenv('CLIENT_ID');
             $clientSecret = getenv('CLIENT_SECRET');
 
