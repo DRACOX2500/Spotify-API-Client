@@ -3,6 +3,7 @@ const asideMenuAlbum = document.getElementById('aside-album-list');
 const searchList = document.getElementById('search-list');
 const searchBtn = document.getElementById('search-btn');
 const searchBar = document.getElementById('search-bar');
+const overLoading = document.getElementById('over-loading');
 
 searchBar.value = 'alestorm'
 
@@ -15,6 +16,18 @@ const albumAside = new bootstrap.Offcanvas(asideMenuAlbum)
 
 function showLoading() {
 	searchList.innerHTML = '<div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
+}
+
+function showAlbumLoading() {
+	document.getElementsByTagName('html')[0].style.setProperty('overflow-y', 'hidden');
+	overLoading.classList.add('over');
+	overLoading.innerHTML = '<div class="absolute-loading"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>';
+}
+
+function hideAlbumLoading() {
+	document.getElementsByTagName('html')[0].style.setProperty('overflow-y', 'auto');
+	overLoading.classList.remove('over');
+	overLoading.innerHTML = '';
 }
 
 showLoading()
@@ -53,16 +66,18 @@ searchBtn.addEventListener('click', () => {
 	search(searchBar.value)
 })
 
-function showAlbums(artistID) {
+function showAlbums(artistID, callback) {
 	if (!artistID || typeof artistID !== 'string') return;
 	const value = albumsCache.get(artistID);
 	const open = (response) => {
 		if (!response) return;
 		asideMenuAlbum.innerHTML = response;
+		hideAlbumLoading()
+		callback();
 		albumAside.show();
 	}
 
-
+	showAlbumLoading()
 	if (value) {
 		open(value);
 	}
@@ -72,7 +87,8 @@ function showAlbums(artistID) {
 			function () {
 				if (!this.responseText) return;
 				albumsCache.set(artistID, this.responseText);
-				open(this.responseText)
+				console.log('ok')
+				open(this.responseText);
 			}
 		)
 	}
@@ -87,8 +103,9 @@ function showArtist() {
 
 		const albumBtn = document.getElementsByClassName('album-list-btn')[0]
 		albumBtn.addEventListener('click', () => {
-			artistAside.hide()
-			showAlbums(id)
+			showAlbums(id, () =>  {
+				artistAside.hide()
+			})
 		})
 
 		artistAside.show();

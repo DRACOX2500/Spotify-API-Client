@@ -44,7 +44,7 @@ class AlbumController extends Controller
             }, $result['items']);
 
             foreach ($albums as $album) {
-                $trackJson = TrackController::getTracksFromAlbum($album->getId());
+                $trackJson = TrackController::getTracksFromAlbum($album->getId(), 50);
                 $trackResult = json_decode($trackJson, true);
                 $album->setTracksFromJson($trackResult['items']);
             }
