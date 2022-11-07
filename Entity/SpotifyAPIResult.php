@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Core\Utils;
+
 class SpotifyAPIResult
 {
 
@@ -184,6 +186,28 @@ class SpotifyAPIResult
             /** @var Album $album */
             $album = $this->getItems()[$i];
 
+            $divTracks = '';
+            for ($j = 0; $j < count($album->getTracks()); $j++) {
+                $track = $album->getTracks()[$j];
+                $artistName = $track->getArtists()[0]->getName() ?? 'no-body';
+                $artistUrl = $track->getArtists()[0]->getExternalUrl()->getSpotify() ?? '#';
+
+                $divTracks .= '<div class="d-flex bg-main-darker flex-row align-item-center justify-content-between rounded py-1 px-5 my-2">
+                                    <span class="badge text-dark bg-secondary px-2 mx-2">#'.($j + 1).'</span>
+                                    <div class="d-flex flex-column justify-content-between">
+                                        <a class="link-light" href="'.$track->getExternalUrls()->getSpotify().'" target="_blank">'.$track->getName().'</a>
+                                        <a class="link-secondary" href="'.$artistUrl.'" target="_blank">'.$artistName.'</a>
+                                    </div>
+                                    <p>
+                                        '.$album->getName().'
+                                    </p>
+                                    <span>
+                                        <i class="bi bi-clock px-2"></i>
+                                        '.Utils::millisecondToMinSecFormat($track->getDurationMs()).'
+                                    </span>
+                                </div>';
+            }
+
             $divs .= '<div class="accordion-item bg-main">
                         <h2 class="accordion-header" id="headingOne">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-'.$i.'" aria-expanded="true" aria-controls="collapse-'.$i.'">
@@ -205,7 +229,9 @@ class SpotifyAPIResult
                                              </span>
                                         </div>
                                     </div>
-                                    
+                                    <div class="d-flex flex-column">
+                                         '.$divTracks.'
+                                    </div>
                               </div>
                         </div>
                   </div>';

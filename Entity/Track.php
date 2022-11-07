@@ -1,64 +1,42 @@
 <?php
-
 namespace App\Entity;
 
-class Album extends Model
+class Track
 {
 
     /**
-     * @var Track[]
-     */
-    private array $tracks;
-
-    /**
-     * @param string $albumGroup
-     * @param string $albumType
      * @param Artist[] $artists
      * @param string[] $availableMarkets
+     * @param int $discNumber
+     * @param int $durationMs
+     * @param bool $explicit
      * @param ExternalUrl $externalUrls
      * @param string $href
      * @param string $id
-     * @param Image[] $images
+     * @param bool $isLocal
      * @param string $name
-     * @param string $releaseDate
-     * @param string $releaseDatePrecision
-     * @param int $totalTracks
+     * @param |null $previewUrl
+     * @param int $trackNumber
      * @param string $type
      * @param string $uri
      */
     public function __construct(
-        private string $albumGroup,
-        private string $albumType,
         private array $artists,
         private array $availableMarkets,
+        private int $discNumber,
+        private int $durationMs,
+        private bool $explicit,
         private ExternalUrl $externalUrls,
         private string $href,
         private string $id,
-        private array $images,
+        private bool $isLocal,
         private string $name,
-        private string $releaseDate,
-        private string $releaseDatePrecision,
-        private int $totalTracks,
+        private $previewUrl,
+        private int $trackNumber,
         private string $type,
         private string $uri,
     )
     {
-    }
-
-    /**
-     * @return string
-     */
-    public function getAlbumGroup(): string
-    {
-        return $this->albumGroup;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAlbumType(): string
-    {
-        return $this->albumType;
     }
 
     /**
@@ -75,6 +53,30 @@ class Album extends Model
     public function getAvailableMarkets(): array
     {
         return $this->availableMarkets;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDiscNumber(): int
+    {
+        return $this->discNumber;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDurationMs(): int
+    {
+        return $this->durationMs;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getExplicit(): bool
+    {
+        return $this->explicit;
     }
 
     /**
@@ -102,11 +104,11 @@ class Album extends Model
     }
 
     /**
-     * @return Image[]
+     * @return bool
      */
-    public function getImages(): array
+    public function getIsLocal(): bool
     {
-        return $this->images;
+        return $this->isLocal;
     }
 
     /**
@@ -118,27 +120,19 @@ class Album extends Model
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getReleaseDate(): string
+    public function getPreviewUrl(): mixed
     {
-        return $this->releaseDate;
-    }
-
-    /**
-     * @return string
-     */
-    public function getReleaseDatePrecision(): string
-    {
-        return $this->releaseDatePrecision;
+        return $this->previewUrl;
     }
 
     /**
      * @return int
      */
-    public function getTotalTracks(): int
+    public function getTrackNumber(): int
     {
-        return $this->totalTracks;
+        return $this->trackNumber;
     }
 
     /**
@@ -158,26 +152,6 @@ class Album extends Model
     }
 
     /**
-     * @param string $albumGroup
-     * @return self
-     */
-    public function setAlbumGroup(string $albumGroup): self
-    {
-        $this->albumGroup = $albumGroup;
-        return $this;
-    }
-
-    /**
-     * @param string $albumType
-     * @return self
-     */
-    public function setAlbumType(string $albumType): self
-    {
-        $this->albumType = $albumType;
-        return $this;
-    }
-
-    /**
      * @param Artist[] $artists
      * @return self
      */
@@ -194,6 +168,36 @@ class Album extends Model
     public function setAvailableMarkets(array $availableMarkets): self
     {
         $this->availableMarkets = $availableMarkets;
+        return $this;
+    }
+
+    /**
+     * @param int $discNumber
+     * @return self
+     */
+    public function setDiscNumber(int $discNumber): self
+    {
+        $this->discNumber = $discNumber;
+        return $this;
+    }
+
+    /**
+     * @param int $durationMs
+     * @return self
+     */
+    public function setDurationMs(int $durationMs): self
+    {
+        $this->durationMs = $durationMs;
+        return $this;
+    }
+
+    /**
+     * @param bool $explicit
+     * @return self
+     */
+    public function setExplicit(bool $explicit): self
+    {
+        $this->explicit = $explicit;
         return $this;
     }
 
@@ -228,12 +232,12 @@ class Album extends Model
     }
 
     /**
-     * @param Image[] $images
+     * @param bool $isLocal
      * @return self
      */
-    public function setImages(array $images): self
+    public function setIsLocal(bool $isLocal): self
     {
-        $this->images = $images;
+        $this->isLocal = $isLocal;
         return $this;
     }
 
@@ -248,32 +252,22 @@ class Album extends Model
     }
 
     /**
-     * @param string $releaseDate
+     * @param mixed $previewUrl
      * @return self
      */
-    public function setReleaseDate(string $releaseDate): self
+    public function setPreviewUrl(mixed $previewUrl): self
     {
-        $this->releaseDate = $releaseDate;
+        $this->previewUrl = $previewUrl;
         return $this;
     }
 
     /**
-     * @param string $releaseDatePrecision
+     * @param int $trackNumber
      * @return self
      */
-    public function setReleaseDatePrecision(string $releaseDatePrecision): self
+    public function setTrackNumber(int $trackNumber): self
     {
-        $this->releaseDatePrecision = $releaseDatePrecision;
-        return $this;
-    }
-
-    /**
-     * @param int $totalTracks
-     * @return self
-     */
-    public function setTotalTracks(int $totalTracks): self
-    {
-        $this->totalTracks = $totalTracks;
+        $this->trackNumber = $trackNumber;
         return $this;
     }
 
@@ -298,58 +292,26 @@ class Album extends Model
     }
 
     /**
-     * @return Track[]
-     */
-    public function getTracks(): array
-    {
-        return $this->tracks;
-    }
-
-    /**
-     * @param Track[] $tracks
-     * @return Album
-     */
-    public function setTracks(array $tracks): self
-    {
-        $this->tracks = $tracks;
-        return $this;
-    }
-
-    /**
-     * @param array $data
-     * @return Album
-     */
-    public function setTracksFromJson(array $data): self
-    {
-        $this->tracks = array_map(static function($item) {
-            return Track::fromJson($item);
-        }, $data);
-        return $this;
-    }
-
-    /**
      * @param array $data
      * @return self
      */
     public static function fromJson(array $data): self
     {
         return new self(
-            $data['album_group'],
-            $data['album_type'],
             array_map(static function($data) {
                 return Artist::fromJson($data);
             }, $data['artists']),
             $data['available_markets'],
+            $data['disc_number'],
+            $data['duration_ms'],
+            $data['explicit'],
             ExternalUrl::fromJson($data['external_urls']),
             $data['href'],
             $data['id'],
-            array_map(static function($data) {
-                return Image::fromJson($data);
-            }, $data['images']),
+            $data['is_local'],
             $data['name'],
-            $data['release_date'],
-            $data['release_date_precision'],
-            $data['total_tracks'],
+            $data['preview_url'] ?? null,
+            $data['track_number'],
             $data['type'],
             $data['uri']
         );

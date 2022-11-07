@@ -68,7 +68,7 @@ function showAlbums(artistID) {
 	}
 	else {
 		ajax(
-			'/ajax/spotify-artist-album.php?artist_id=' + artistID,
+			'/ajax/spotify-artist-album-track.php?artist_id=' + artistID,
 			function () {
 				if (!this.responseText) return;
 				asideMenuAlbum.innerHTML = this.response;
