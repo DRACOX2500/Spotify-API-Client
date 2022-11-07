@@ -68,11 +68,11 @@ function showAlbums(artistID) {
 	}
 	else {
 		ajax(
-			'/ajax/spotify-artist-album-track.php?artist_id=' + artistID,
+			'/album/ajax/' + artistID,
 			function () {
 				if (!this.responseText) return;
-				asideMenuAlbum.innerHTML = this.response;
-				albumAside.show()
+				albumsCache.set(artistID, this.responseText);
+				open(this.responseText)
 			}
 		)
 	}
@@ -100,7 +100,7 @@ function showArtist() {
 	}
 	else {
 		ajax(
-			'artist/html/' + id,
+			'artist/ajax/' + id,
 			function () {
 				if (!this.responseText) return;
 				artistCache.set(id, this.responseText);
