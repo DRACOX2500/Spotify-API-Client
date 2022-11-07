@@ -6,87 +6,209 @@ class Artist
 {
 
     public function __construct(
-        public string $id,
-
-        public string $name,
-
-        public int    $followers,
-
-        public array  $genders,
-
-        public string $link,
-
-        public string $picture,
+        private ExternalUrl $externalUrl,
+        private ?Follower    $follower,
+        private ?array       $genres,
+        private string      $href,
+        private string      $id,
+        private ?array       $image,
+        private string      $name,
+        private ?int         $popularity,
+        private string      $type,
+        private string      $uri,
     )
     {
     }
 
+    /**
+     * @return ExternalUrl
+     */
+    public function getExternalUrl(): ExternalUrl
+    {
+        return $this->externalUrl;
+    }
+
+    /**
+     * @param ExternalUrl $externalUrl
+     */
+    public function setExternalUrl(ExternalUrl $externalUrl): self
+    {
+        $this->externalUrl = $externalUrl;
+        return $this;
+    }
+
+    /**
+     * @return Follower
+     */
+    public function getFollower(): Follower
+    {
+        return $this->follower;
+    }
+
+    /**
+     * @param Follower $follower
+     */
+    public function setFollower(Follower $follower): self
+    {
+        $this->follower = $follower;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGenres(): array
+    {
+        return $this->genres;
+    }
+
+    /**
+     * @param array $genres
+     */
+    public function setGenres(array $genres): self
+    {
+        $this->genres = $genres;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHref(): string
+    {
+        return $this->href;
+    }
+
+    /**
+     * @param string $href
+     */
+    public function setHref(string $href): self
+    {
+        $this->href = $href;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getId(): string
     {
         return $this->id;
     }
 
+    /**
+     * @param string $id
+     */
     public function setId(string $id): self
     {
         $this->id = $id;
         return $this;
     }
 
+    /**
+     * @return Image[]
+     */
+    public function getImage(): array
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param Image[] $image
+     */
+    public function setImage(array $image): self
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
     }
 
-    public function setFollowers(int $followers): self
+    /**
+     * @return int
+     */
+    public function getPopularity(): int
     {
-        $this->followers = $followers;
+        return $this->popularity;
+    }
+
+    /**
+     * @param int $popularity
+     */
+    public function setPopularity(int $popularity): self
+    {
+        $this->popularity = $popularity;
         return $this;
     }
 
-    public function getFollowers(): int
+    /**
+     * @return string
+     */
+    public function getType(): string
     {
-        return $this->followers;
+        return $this->type;
     }
 
-    public function getGenders(): array
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): self
     {
-        return $this->genders;
-    }
-
-    public function setGenders(array $genders): self
-    {
-        $this->genders = $genders;
+        $this->type = $type;
         return $this;
     }
 
-    public function getLink(): string
+    /**
+     * @return string
+     */
+    public function getUri(): string
     {
-        return $this->link;
+        return $this->uri;
     }
 
-    public function setLink(string $link): self
+    /**
+     * @param string $uri
+     */
+    public function setUri(string $uri): self
     {
-        $this->link = $link;
+        $this->uri = $uri;
         return $this;
     }
 
-
-    public function getPicture(): string
+    /**
+     * @param array $data
+     * @return self
+     */
+    public static function fromJson(array $data): self
     {
-        return $this->picture;
+        return new self(
+            ExternalUrl::fromJson($data['external_urls']),
+            isset($data['followers']) ? Follower::fromJson($data['followers']) : null,
+            isset($data['genres']) ? $data['genres'] : null,
+            $data['href'],
+            $data['id'],
+            isset($data['images']) ? array_map(static function($data) {
+                return Image::fromJson($data);
+            }, $data['images']) : null,
+            $data['name'],
+            isset($data['popularity']) ? $data['popularity'] : null,
+            $data['type'],
+            $data['uri']
+        );
     }
-
-    public function setPicture(string $picture): self
-    {
-        $this->picture = $picture;
-        return $this;
-    }
-
-
 }

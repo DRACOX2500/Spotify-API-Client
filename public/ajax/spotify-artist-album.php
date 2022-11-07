@@ -1,7 +1,7 @@
 <?php
-
-require '../auth-spotify.php';
-require '../Autoloader.php';
+session_start();
+//require '../auth-spotify.php';
+require __DIR__.'/../../Autoloader.php';
 
 use App\Autoloader;
 use App\Entity\SpotifyAPIResult;

@@ -1,7 +1,7 @@
 <?php
-
-require '../auth-spotify.php';
-require '../Autoloader.php';
+session_start();
+//require __DIR__.'/../../Core/AuthSpotify.php';
+require __DIR__.'/../../Autoloader.php';
 
 use App\Autoloader;
 use App\Entity\Artist;
