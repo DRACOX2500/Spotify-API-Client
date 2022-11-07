@@ -249,7 +249,7 @@ class SpotifyAPIResult
             }
 
             $divs .= '<div class="col">
-                <div id="' . $this->getItemByID($i)->getId() . '" class="card ' . $class . '" style="width: 18rem;">
+                <div id="' . $this->getItems()[$i]->getIdSpotify() . '" class="card ' . $class . '" style="width: 18rem;">
                     <img src="' . $image . '" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title fw-bold">' . $this->getItemByID($i)->getName() . '</h5>
