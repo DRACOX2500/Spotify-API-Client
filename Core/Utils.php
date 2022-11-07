@@ -18,4 +18,11 @@ class Utils
 
         return $minutes.':'.$seconds;
     }
+
+    public static function getParams(): array
+    {
+        $params = $_SERVER['REQUEST_URI'];
+        $params = substr($params, 1);
+        return explode('/', $params);
+    }
 }

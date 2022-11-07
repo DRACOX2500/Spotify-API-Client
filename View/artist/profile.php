@@ -1,35 +1,16 @@
 <?php
-session_start();
+$artist = $data['artist'];
+$image = "/assets/spotify.jpg";
+if (count($artist->getImage()) > 0) {
+    $image = $artist->getImage()[0]->getUrl();
+}
 
-require __DIR__.'/../../Autoloader.php';
+$badges = '';
+foreach ($artist->getGenres() as $genre) {
+    $badges .= '<span class="badge bg-secondary text-dark mx-2 my-1">'.$genre.'</span>';
+}
 
-use App\Autoloader;
-use App\Entity\Artist;
-
-Autoloader::register();
-
-if (!empty($_GET) && !empty($_GET['artist_id'])) {
-    define("ARTIST_ID", $_GET['artist_id']);
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/artists/" . ARTIST_ID);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $_SESSION['token']));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $result = curl_exec($ch);
-    curl_close($ch);
-
-    if ($_GET['format'] === 'html') {
-        $artist = Artist::fromJson(json_decode($result, true));
-        $image = "/assets/spotify.jpg";
-        if (count($artist->getImage()) > 0) {
-            $image = $artist->getImage()[0]->getUrl();
-        }
-        $badges = '';
-        foreach ($artist->getGenres() as $genre) {
-            $badges .= '<span class="badge bg-secondary text-dark mx-2 my-1">'.$genre.'</span>';
-        }
-
-        echo '<div class="offcanvas-header">
+echo '<div class="offcanvas-header">
                 <h3 class="offcanvas-title fs-3 fw-semibold text-light pb-3 mb-3 border-bottom">'.$artist->getName().'</h3>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
@@ -61,10 +42,3 @@ if (!empty($_GET) && !empty($_GET['artist_id'])) {
                 </button>
                 </div>
             </div>';
-    } else {
-        echo $result;
-    }
-
-} else {
-    echo '{}';
-}

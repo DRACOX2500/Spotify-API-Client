@@ -100,7 +100,7 @@ function showArtist() {
 	}
 	else {
 		ajax(
-			'/ajax/spotify-artist.php?format=html&artist_id=' + id,
+			'artist/html/' + id,
 			function () {
 				if (!this.responseText) return;
 				artistCache.set(id, this.responseText);
