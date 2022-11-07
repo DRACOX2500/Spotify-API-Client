@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\DotEnv;
+
 class AuthSpotify
 {
     public function auth(): void
@@ -17,8 +19,9 @@ class AuthSpotify
 
         if ($newTokenNeeded) {
 
-            $clientId = "99047b88923a48ffb81536af01aab19b";
-            $clientSecret = "5283fcfb1e9945b88bbcdd4e3300865d";
+            (new DotEnv(__DIR__ . '/.env'))->load();
+            $clientId = getenv('CLIENT_ID');
+            $clientSecret = getenv('CLIENT_SECRET');
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, 'https://accounts.spotify.com/api/token');
