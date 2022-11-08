@@ -11,9 +11,9 @@ class Image
      * @param int $width
      */
     public function __construct(
-        private int $height,
-        private string $url,
-        private int $width
+        public int $height,
+        public string $url,
+        public int $width
     )
     {
     }

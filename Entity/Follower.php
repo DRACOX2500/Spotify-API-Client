@@ -6,8 +6,8 @@ class Follower
 {
 
     public function __construct(
-        private ?string $href,
-        private int $total,
+        public ?string $href,
+        public int $total,
     )
     {
     }

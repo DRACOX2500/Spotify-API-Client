@@ -8,16 +8,16 @@ class Artist extends Model
     public int $id;
 
     public function __construct(
-        private ExternalUrl $externalUrl,
-        private ?Follower   $follower,
-        private ?array      $genres,
-        private string      $href,
-        private string      $idSpotify,
-        private ?array      $image,
-        private string      $name,
-        private ?int        $popularity,
-        private string      $type,
-        private string      $uri,
+        protected ExternalUrl $externalUrl,
+        protected ?Follower   $follower,
+        protected ?array      $genres,
+        protected string      $href,
+        protected string      $idSpotify,
+        protected ?array      $image,
+        protected string      $name,
+        protected ?int        $popularity,
+        protected string      $type,
+        protected string      $uri,
     )
     {
         $this->table = "artist";

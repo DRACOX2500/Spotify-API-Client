@@ -1,5 +1,6 @@
 <?php
 $artist = $data['artist'];
+$favorite = !empty($data['res']);
 $image = "/assets/spotify.jpg";
 if (count($artist->getImage()) > 0) {
     $image = $artist->getImage()[0]->getUrl();
@@ -20,8 +21,8 @@ echo '<div class="offcanvas-header">
                         <a href="'.$artist->getExternalUrl()->getSpotify().'" target="_blank">
                                 <img src="'.$image.'" alt="artist image">
                             </a>
-                        <button type="button" class="abs-btn favorite-button">
-                            <i class="bi bi-star'.(isset($artist->id) ? '-fill' : '').'"></i>
+                        <button type="button" class="abs-btn favorite-button '.($favorite ? 'is-fav' : '').'">
+                            <i class="bi bi-star'.($favorite ? '-fill' : '').'"></i>
                         </button>
                     </div>
                        

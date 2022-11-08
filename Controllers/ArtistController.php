@@ -29,7 +29,24 @@ class ArtistController extends Controller
         if (isset($artistId)) {
             $result = self::getArtist($artistId);
             $artist = Artist::fromJson(json_decode($result, true));
-            $this->render('artist/ajax', compact('artist'), 'empty');
+            $res = $artist->findBy(['idSpotify' => $artist->getIdSpotify()]);
+            $this->render('artist/ajax', compact('artist', 'res'), 'empty');
+        }
+        else
+        {
+            http_response_code(404);
+        }
+    }
+
+    public function insert(): void
+    {
+        $artistID = Utils::getParams()[2];
+
+        if (isset($artistID)) {
+
+            $artist = ArtistController::insertArtistInDB($artistID);
+            $code = is_int($artist) ? $artist : 200;
+            $this->render('artist/insert', compact('code', 'artist'), 'empty');
         }
         else
         {
@@ -53,5 +70,21 @@ class ArtistController extends Controller
         curl_close($ch);
 
         return $result;
+    }
+
+    /**
+     * @param string $artistID
+     * @return bool|string
+     */
+    public static function insertArtistInDB(string $artistID): int|string
+    {
+        $json = ArtistController::getArtist($artistID);
+        if (is_bool($json)) return 500;
+        $artist = Artist::fromJson(json_decode($json, true));
+        $res = $artist->findBy(['idSpotify' => $artist->getIdSpotify()]);
+        if (!empty($res)) return 409;
+
+        $artist->create();
+        return $json;
     }
 }
