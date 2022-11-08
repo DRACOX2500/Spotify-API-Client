@@ -15,7 +15,7 @@ class AlbumController extends Controller
 
         if (isset($artistId)) {
             $albums = self::getAlbumsFromArtist($artistId, $limit);
-            $this->render('album/index', compact('albums'), 'empty');
+            $this->render('album/json', compact('albums'), 'empty');
         }
         else
         {

@@ -13,7 +13,7 @@ class ArtistController extends Controller
 
         if (isset($artistId)) {
             $artist = self::getArtist($artistId);
-            $this->render('artist/index', compact('artist'), 'empty');
+            $this->render('artist/json', compact('artist'), 'empty');
         }
         else
         {

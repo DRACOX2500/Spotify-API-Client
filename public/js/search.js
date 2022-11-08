@@ -44,10 +44,10 @@ function ajax(url, callback, method = 'GET') {
 	xmlhttp.send();
 }
 
-function search(query, type = 'artist') {
+function search(query, type = null) {
 	showLoading()
 	ajax(
-		'/Ajax/spotify-search.php?q=' + query + '&type=' + type,
+		'/search/ajax/?query=' + query + (type ? '&type=' + type : ''),
 		function () {
 			if (!this.responseText) return;
 			searchList.innerHTML = this.responseText;

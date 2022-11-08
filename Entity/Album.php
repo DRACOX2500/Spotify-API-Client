@@ -27,7 +27,7 @@ class Album extends Model
      * @param string $uri
      */
     public function __construct(
-        private string $albumGroup,
+        private ?string $albumGroup,
         private string $albumType,
         private array $artists,
         private array $availableMarkets,
@@ -334,7 +334,7 @@ class Album extends Model
     public static function fromJson(array $data): self
     {
         return new self(
-            $data['album_group'],
+            $data['album_group'] ?? null,
             $data['album_type'],
             array_map(static function($data) {
                 return Artist::fromJson($data);
