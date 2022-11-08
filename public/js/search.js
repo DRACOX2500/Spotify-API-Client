@@ -44,6 +44,10 @@ function ajax(url, callback, method = 'GET') {
 	xmlhttp.send();
 }
 
+function getCardTitle(cardElement) {
+	return cardElement.querySelectorAll('.card-title')[0].innerText;
+}
+
 function search(query, type = null) {
 	showLoading()
 	ajax(
@@ -51,8 +55,18 @@ function search(query, type = null) {
 		function () {
 			if (!this.responseText) return;
 			searchList.innerHTML = this.responseText;
+			const cards = [...searchList.childNodes]
 
-			const cardButtons = document.getElementsByClassName('card-btn');
+			// alphabetic sort
+			cards.sort((a, b) => getCardTitle(a).localeCompare(getCardTitle(b)))
+
+			// include search input value sort
+			cards.sort((a, b) =>  !getCardTitle(a).toLowerCase().includes(searchBar.value.toLowerCase())
+					- !getCardTitle(b).toLowerCase().includes(searchBar.value.toLowerCase()))
+			searchList.innerHTML = '';
+			searchList.append(...cards)
+
+			const cardButtons = document.getElementsByClassName('artist-card-btn');
 			for (let cardButton of cardButtons) {
 				cardButton.addEventListener('click', showArtist.bind(cardButton));
 			}
@@ -93,6 +107,30 @@ function showAlbums(artistID, callback) {
 	}
 }
 
+function activateFavArtistBtnEffect(artistCache, id) {
+	const toggleFav = function () {
+
+		if (this.classList.contains('is-fav')) {
+			this.classList.remove('is-fav');
+			this.children[0].classList.remove('bi-star-fill');
+			this.children[0].classList.add('bi-star');
+		}
+		else {
+			this.classList.add('is-fav')
+			this.children[0].classList.remove('bi-star');
+			this.children[0].classList.add('bi-star-fill');
+		}
+		artistCache.set(id, asideMenu.innerHTML);
+	};
+
+	const bubblyButtons = document.getElementsByClassName("favorite-button");
+	console.log(bubblyButtons)
+
+	for (let i = 0; i < bubblyButtons.length; i++) {
+		bubblyButtons[i].addEventListener('click', toggleFav.bind(bubblyButtons[i]));
+	}
+}
+
 function showArtist() {
 	const id = this.parentNode.parentElement.id;
 	const value = artistCache.get(id);
@@ -106,7 +144,7 @@ function showArtist() {
 				artistAside.hide()
 			})
 		})
-
+		activateFavArtistBtnEffect(artistCache, id);
 		artistAside.show();
 	}
 

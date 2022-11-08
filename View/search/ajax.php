@@ -20,7 +20,7 @@ if (isset($artists)) {
                         </p>
                         <button type="button"
                             href="#"
-                            class="btn bg-secondary stretched-link w-75 d-flex flex-row align-items-center card-btn">
+                            class="btn bg-secondary stretched-link w-75 d-flex flex-row align-items-center artist-card-btn">
                             <i class="bi bi-plus-square-fill p-2"></i>
                             More details...
                         </button>
@@ -49,7 +49,7 @@ if (isset($albums)) {
                         </p>
                         <button type="button"
                             href="#"
-                            class="btn bg-secondary stretched-link w-75 d-flex flex-row align-items-center card-btn">
+                            class="btn bg-secondary stretched-link w-75 d-flex flex-row align-items-center album-card-btn">
                             <i class="bi bi-plus-square-fill p-2"></i>
                             More details...
                         </button>
@@ -59,8 +59,5 @@ if (isset($albums)) {
     }, $albums);
     $divs_array = array_merge($divs_array, $divs_albums);
 }
-
-shuffle($divs_array);
-
 
 echo implode('', $divs_array);

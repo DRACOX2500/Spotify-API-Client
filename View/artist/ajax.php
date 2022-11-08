@@ -16,9 +16,15 @@ echo '<div class="offcanvas-header">
             </div>
             <div class="offcanvas-body">
                 <div class="flex-shrink-0 p-3 bg-dark d-flex flex-column">
-                       <a href="'.$artist->getExternalUrl()->getSpotify().'" target="_blank">
-                    <img src="'.$image.'" alt="artist image">
-                </a>
+                    <div class="d-flex align-items-center justify-content-center position-relative">
+                        <a href="'.$artist->getExternalUrl()->getSpotify().'" target="_blank">
+                                <img src="'.$image.'" alt="artist image">
+                            </a>
+                        <button type="button" class="abs-btn favorite-button">
+                            <i class="bi bi-star'.(isset($artist->id) ? '-fill' : '').'"></i>
+                        </button>
+                    </div>
+                       
 
                 <div class="d-flex flex-row justify-content-evenly py-4">
                     <div class="stats fs-4  d-flex flex-column bg-main p-4 rounded">
@@ -31,8 +37,8 @@ echo '<div class="offcanvas-header">
                     </div>
                 </div>
                 
-                <h5 class="fs-5 fw-semibold text-light pb-4 mb-4 border-bottom">Genres</h5>
-                <div class="badge-list">
+                <h5 class="fs-5 fw-semibold text-light pb-4 mb-4 border-bottom text-center">Genres</h5>
+                <div class="badge-list d-flex flex-wrap justify-content-center">
                     '.$badges.'
                 </div>
                 

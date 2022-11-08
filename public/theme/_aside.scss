@@ -19,6 +19,16 @@
             }
         }
 
+        .abs-btn {
+            position: absolute;
+            right: 55px;
+            bottom: -55px;
+            font-size: xx-large;
+            padding-inline: 20px;
+            padding-block: 10px;
+            border-radius: 50%;
+        }
+
         .stats {
             -webkit-box-shadow: 0 10px 20px rgba(map-get($theme, secondary),.3);
             box-shadow: 0 10px 20px rgba(map-get($theme, secondary),.3);
