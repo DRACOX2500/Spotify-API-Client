@@ -5,5 +5,5 @@
 .env
 
 #Style
-theme/*.css
-theme/*.map
+public/theme/*.css
+public/theme/*.map
