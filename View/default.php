@@ -6,17 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
     <!-- Icons only -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/theme/style.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <title>Titre</title>
 
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"-->
-<!--          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">-->
 </head>
 
 <body>
@@ -24,13 +22,16 @@
     <div class="container-fluid align-items-center" style="grid-template-columns: 1fr 2fr;">
 
         <div class="d-flex align-items-center">
-            <form id="search-form" class="w-100 me-3 d-flex align-items-center flex-row justify-content-evenly" role="search">
+            <form id="search-form" class="w-100 me-3 d-flex align-items-center flex-row justify-content-evenly"
+                  role="search">
                 <img src="/assets/spotify_logo.png" class="header-logo" alt="app_logo">
 
                 <div class="w-75 d-flex align-items-center flex-row justify-content-evenly">
-                    <input id="search-bar" type="search" class="form-control w-100 p-2 text-light bg-dark border border-0" placeholder="Search..." aria-label="Search" name="q">
+                    <input id="search-bar" type="search" class="form-control w-100 p-2 text-light bg-dark border border-0"
+                           placeholder="Search..." aria-label="Search" name="q">
 
-                    <button id="search-btn" type="submit" class="btn bg-secondary p-2 d-flex flex-row align-items-center">
+                    <button id="search-btn" type="submit"
+                            class="btn bg-secondary p-2 d-flex flex-row align-items-center">
                         <i class="bi bi-search p-1"></i>
                         Search
                     </button>
@@ -75,9 +76,11 @@
     <?= $contenu ?>
 </main>
 
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"-->
-<!--        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"-->
-<!--        crossorigin="anonymous"></script>-->
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+
 </body>
 
 </html>
