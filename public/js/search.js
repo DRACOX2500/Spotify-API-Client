@@ -117,6 +117,16 @@ function insertFav(artistID, callback) {
 	)
 }
 
+function deleteFav(artistID, callback) {
+	ajax(
+		'/artist/delete/' + artistID,
+		function () {
+			if (!this.responseText) return;
+			callback(JSON.parse(this.responseText));
+		}
+	)
+}
+
 function activateFavArtistBtnEffect(artistCache, id) {
 	const toggleFav = function () {
 
@@ -124,6 +134,16 @@ function activateFavArtistBtnEffect(artistCache, id) {
 			this.classList.remove('is-fav');
 			this.children[0].classList.remove('bi-star-fill');
 			this.children[0].classList.add('bi-star');
+			deleteFav(id, (result) => {
+				if (result.code === 200) {
+					this.children[0].classList.remove('bi-star-fill');
+					this.children[0].classList.add('bi-star');
+				}
+				else {
+					this.children[0].classList.remove('bi-star');
+					this.children[0].classList.add('bi-star-fill');
+				}
+			})
 		}
 		else {
 			this.classList.add('is-fav')

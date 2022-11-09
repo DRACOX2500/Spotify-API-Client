@@ -54,6 +54,21 @@ class ArtistController extends Controller
         }
     }
 
+    public function delete(): void
+    {
+        $artistID = Utils::getParams()[2];
+
+        if (isset($artistID)) {
+
+            $code = ArtistController::deleteArtistInDB($artistID);
+            $this->render('artist/delete', compact('code'), 'empty');
+        }
+        else
+        {
+            http_response_code(404);
+        }
+    }
+
     /**
      * @param string $artistID
      * @return bool|string
@@ -74,7 +89,7 @@ class ArtistController extends Controller
 
     /**
      * @param string $artistID
-     * @return bool|string
+     * @return int|string
      */
     public static function insertArtistInDB(string $artistID): int|string
     {
@@ -86,5 +101,19 @@ class ArtistController extends Controller
 
         $artist->create();
         return $json;
+    }
+
+    /**
+     * @param string $artistID
+     * @return int
+     */
+    public static function deleteArtistInDB(string $artistID): int
+    {
+        $mock = Artist::getDefaultInstance();
+        $res = $mock->findBy(['idSpotify' => $artistID]);
+
+        if (empty($res)) return 404;
+        $mock->delete($res[0]->id);
+        return 202;
     }
 }

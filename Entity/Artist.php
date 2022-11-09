@@ -23,6 +23,22 @@ class Artist extends Model
         $this->table = "artist";
     }
 
+    public static function getDefaultInstance(): self
+    {
+            return new Artist(
+                new ExternalUrl(''),
+                null,
+                null,
+                '',
+                '',
+                null,
+                '',
+                null,
+                '',
+                ''
+            );
+    }
+
     /**
      * @return ExternalUrl
      */
