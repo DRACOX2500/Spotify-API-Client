@@ -9,6 +9,7 @@ searchBar.value = 'alestorm'
 
 const artistCache = new Map();
 const albumsCache = new Map();
+const albumsAndTracksCache = new Map();
 
 const artistAside = new bootstrap.Offcanvas(asideMenu)
 
@@ -66,9 +67,14 @@ function search(query, type = null) {
 			searchList.innerHTML = '';
 			searchList.append(...cards)
 
-			const cardButtons = document.getElementsByClassName('artist-card-btn');
-			for (let cardButton of cardButtons) {
+			const cardArtistButtons = document.getElementsByClassName('artist-card-btn');
+			const cardAlbumButtons = document.getElementsByClassName('album-card-btn');
+			for (let cardButton of cardArtistButtons) {
 				cardButton.addEventListener('click', showArtist.bind(cardButton));
+			}
+			for (let cardButton of cardAlbumButtons) {
+				console.log(cardButton)
+				cardButton.addEventListener('click', showAlbum.bind(cardButton));
 			}
 		}
 	)
@@ -80,9 +86,33 @@ searchBtn.addEventListener('click', () => {
 	search(searchBar.value)
 })
 
+function showAlbum() {
+	const id = this.parentNode.parentElement.id;
+	const value = albumsCache.get(id);
+	const open = (response) => {
+		if (!response) return;
+		asideMenuAlbum.innerHTML = response;
+		albumAside.show();
+	}
+
+	if (value) {
+		open(value);
+	}
+	else {
+		ajax(
+			'/album/ajax2/' + id,
+			function () {
+				if (!this.responseText) return;
+				albumsCache.set(id, this.responseText);
+				open(this.responseText);
+			}
+		)
+	}
+}
+
 function showAlbums(artistID, callback) {
 	if (!artistID || typeof artistID !== 'string') return;
-	const value = albumsCache.get(artistID);
+	const value = albumsAndTracksCache.get(artistID);
 	const open = (response) => {
 		if (!response) return;
 		asideMenuAlbum.innerHTML = response;
@@ -100,7 +130,7 @@ function showAlbums(artistID, callback) {
 			'/album/ajax/' + artistID,
 			function () {
 				if (!this.responseText) return;
-				albumsCache.set(artistID, this.responseText);
+				albumsAndTracksCache.set(artistID, this.responseText);
 				open(this.responseText);
 			}
 		)

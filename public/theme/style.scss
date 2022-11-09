@@ -32,7 +32,8 @@ header {
 }
 
 main {
-  min-height: calc(100vh - 82px);
+  height: calc(100vh - 82px);
+  overflow-y: auto;
 }
 
 .header-logo {

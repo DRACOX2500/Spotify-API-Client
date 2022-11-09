@@ -8,6 +8,7 @@ use App\Entity\Artist;
 
 class AlbumController extends Controller
 {
+
     public function json(): void
     {
         $artistId = Utils::getParams()[2];
@@ -56,6 +57,53 @@ class AlbumController extends Controller
         {
             http_response_code(404);
         }
+    }
+
+    /**
+     * /artist/html/{param2}/{param3}
+     * param2: album ID
+     * param3: limit (optional)
+     * @return void
+     */
+    public function ajax2(): void
+    {
+        $albumId = Utils::getParams()[2];
+        $limit = Utils::getParams()[3] ?? 20;
+
+        if (isset($albumId)) {
+            $json = self::getAlbum($albumId);
+            $album = Album::fromJson(json_decode($json, true));
+
+            $trackJson = TrackController::getTracksFromAlbum($album->getId(), 50);
+            $trackResult = json_decode($trackJson, true);
+            $album->setTracksFromJson($trackResult['items']);
+
+
+            $this->render('album/ajax2', compact('album'), 'empty');
+        }
+        else
+        {
+            http_response_code(404);
+        }
+    }
+
+
+    /**
+     * @param string $albumID
+     * @return bool|string
+     */
+    public static function getAlbum(string $albumID): bool|string
+    {
+        define("ALBUM_ID", $albumID);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/albums/" . ALBUM_ID);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $_SESSION['token']));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return $result;
     }
 
     /**

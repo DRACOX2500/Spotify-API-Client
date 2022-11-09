@@ -84,65 +84,63 @@
                 background-color: map-get($theme, secondary);
             }
         }
+    }
 
-        .accordion-body {
-            .album-data {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: start;
+    .album-data {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
 
-                padding: 20px;
+        padding: 20px;
 
-                background: map-get($theme, main);
-                background: linear-gradient(0deg, rgba(map-get($theme, main),1) 0%, rgba(map-get($theme, secondary),0.8) 100%);
+        background: map-get($theme, main);
+        background: linear-gradient(0deg, rgba(map-get($theme, main),1) 0%, rgba(map-get($theme, secondary),0.8) 100%);
 
-                img {
-                    width: 400px;
-                    object-fit: cover;
-                    object-position: center;
-                }
+        img {
+            width: 400px;
+            object-fit: cover;
+            object-position: center;
+        }
 
-                & > div {
-                    padding: 30px;
-                    width: 100%;
-                    display: flex;
-                    flex-direction: column;
+        & > div {
+            padding: 30px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
 
-                    .al-type {
-                        font-family: "GothamMedium", sans-serif;
-                        font-size: x-large;
-                    }
+            .al-type {
+                font-family: "GothamMedium", sans-serif;
+                font-size: x-large;
+            }
 
-                    .al-name {
-                        font-family: "GothamMedium", sans-serif;
-                        font-size: xxx-large;
-                    }
+            .al-name {
+                font-family: "GothamMedium", sans-serif;
+                font-size: xxx-large;
+            }
+        }
+    }
+
+    table {
+
+        padding-inline: 20px;
+
+        tbody {
+
+            tr {
+                border-radius: 4px;
+                padding-block: 10px;
+
+                &:hover {
+                    background-color: map-get($main, ligther-plus);
                 }
             }
 
-            & > table {
-
-                padding-inline: 20px;
-
-                tbody {
-
-                    tr {
-                        border-radius: 4px;
-                        padding-block: 10px;
-
-                        &:hover {
-                            background-color: map-get($main, ligther-plus);
-                        }
-                    }
-
-                    &.tbody-no-border-bottom {
-                        tr {
-                            border-bottom: 0;
-                            &>* {
-                                border-bottom: 0;
-                            }
-                        }
+            &.tbody-no-border-bottom {
+                tr {
+                    border-bottom: 0;
+                    &>* {
+                        border-bottom: 0;
                     }
                 }
             }
