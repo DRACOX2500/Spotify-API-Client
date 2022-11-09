@@ -107,6 +107,16 @@ function showAlbums(artistID, callback) {
 	}
 }
 
+function insertFav(artistID, callback) {
+	ajax(
+		'/artist/insert/' + artistID,
+		function () {
+			if (!this.responseText) return;
+			callback(JSON.parse(this.responseText));
+		}
+	)
+}
+
 function activateFavArtistBtnEffect(artistCache, id) {
 	const toggleFav = function () {
 
@@ -119,15 +129,24 @@ function activateFavArtistBtnEffect(artistCache, id) {
 			this.classList.add('is-fav')
 			this.children[0].classList.remove('bi-star');
 			this.children[0].classList.add('bi-star-fill');
+			insertFav(id, (result) => {
+				if (result.code === 200 || result.code === 409) {
+					this.children[0].classList.remove('bi-star');
+					this.children[0].classList.add('bi-star-fill');
+				}
+				else {
+					this.children[0].classList.remove('bi-star-fill');
+					this.children[0].classList.add('bi-star');
+				}
+			})
 		}
 		artistCache.set(id, asideMenu.innerHTML);
 	};
 
-	const bubblyButtons = document.getElementsByClassName("favorite-button");
-	console.log(bubblyButtons)
+	const favoriteButtons = document.getElementsByClassName("favorite-button");
 
-	for (let i = 0; i < bubblyButtons.length; i++) {
-		bubblyButtons[i].addEventListener('click', toggleFav.bind(bubblyButtons[i]));
+	for (let i = 0; i < favoriteButtons.length; i++) {
+		favoriteButtons[i].addEventListener('click', toggleFav.bind(favoriteButtons[i]));
 	}
 }
 
