@@ -14,23 +14,21 @@ for ($i = 0; $i < count($albums); $i++) {
     $divTracks = '';
     for ($j = 0; $j < count($album->getTracks()); $j++) {
         $track = $album->getTracks()[$j];
-        $artistName = $track->getArtists()[0]->getName() ?? 'no-body';
-        $artistUrl = $track->getArtists()[0]->getExternalUrl()->getSpotify() ?? '#';
+        $artistTag = implode(', ', array_map(function ($item) use ($track) {
+            $artistUrl = $track->getArtists()[0]->getExternalUrl()->getSpotify() ?? '#';
+            return '<a class="link-secondary text-decoration-none hover-underline" href="'.$artistUrl.'" target="_blank">'.$item->getName().'</a>';
+        }, $track->getArtists()));
 
-        $divTracks .= '<div class="d-flex bg-main-darker flex-row align-item-center justify-content-between rounded py-1 px-5 my-2">
-                                    <span class="badge text-dark bg-secondary px-2 mx-2">#'.($j + 1).'</span>
+        $divTracks .= '<tr>
+                              <th scope="row" class="row-track text-center vertical-align-middle">'.($j + 1).'</th>
+                              <td>
                                     <div class="d-flex flex-column justify-content-between">
-                                        <a class="link-light" href="'.$track->getExternalUrls()->getSpotify().'" target="_blank">'.$track->getName().'</a>
-                                        <a class="link-secondary" href="'.$artistUrl.'" target="_blank">'.$artistName.'</a>
+                                        <a class="link-light text-decoration-none" href="'.$track->getExternalUrls()->getSpotify().'" target="_blank">'.$track->getName().'</a>
+                                        <div class="text-secondary">'.$artistTag.'</div>
                                     </div>
-                                    <p>
-                                        '.$album->getName().'
-                                    </p>
-                                    <span>
-                                        <i class="bi bi-clock px-2"></i>
-                                        '.Utils::millisecondToMinSecFormat($track->getDurationMs()).'
-                                    </span>
-                                </div>';
+                              </td>
+                              <td class="vertical-align-middle">'.Utils::millisecondToMinSecFormat($track->getDurationMs()).'</td>
+                       </tr>';
     }
 
     $divs .= '<div class="accordion-item bg-main">
@@ -41,7 +39,7 @@ for ($i = 0; $i < count($albums); $i++) {
                               </button>
                         </h2>
                         <div id="collapse-'.$i.'" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                              <div class="accordion-body">
+                              <div class="accordion-body p-0">
                                     <div class="album-data">
                                         <img src="'.$album->getImages()[0]->getUrl().'" alt="album_picture">
                                         <div>
@@ -54,9 +52,18 @@ for ($i = 0; $i < count($albums); $i++) {
                                              </span>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-column">
-                                         '.$divTracks.'
-                                    </div>
+                                    <table class="table grey-color mt-3">
+                                          <thead>
+                                                <tr>
+                                                  <th scope="col" class="text-center">#</th>
+                                                  <th scope="col">TITRE</th>
+                                                  <th scope="col"><i class="bi bi-clock px-2"></i></th>
+                                                </tr>
+                                          </thead>
+                                          <tbody class="tbody-no-border-bottom">
+                                            '.$divTracks.'
+                                          </tbody>
+                                    </table>
                               </div>
                         </div>
                   </div>';

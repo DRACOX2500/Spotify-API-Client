@@ -92,6 +92,11 @@
                 align-items: center;
                 justify-content: start;
 
+                padding: 20px;
+
+                background: map-get($theme, main);
+                background: linear-gradient(0deg, rgba(map-get($theme, main),1) 0%, rgba(map-get($theme, secondary),0.8) 100%);
+
                 img {
                     width: 400px;
                     object-fit: cover;
@@ -112,6 +117,32 @@
                     .al-name {
                         font-family: "GothamMedium", sans-serif;
                         font-size: xxx-large;
+                    }
+                }
+            }
+
+            & > table {
+
+                padding-inline: 20px;
+
+                tbody {
+
+                    tr {
+                        border-radius: 4px;
+                        padding-block: 10px;
+
+                        &:hover {
+                            background-color: map-get($main, ligther-plus);
+                        }
+                    }
+
+                    &.tbody-no-border-bottom {
+                        tr {
+                            border-bottom: 0;
+                            &>* {
+                                border-bottom: 0;
+                            }
+                        }
                     }
                 }
             }
