@@ -4,6 +4,7 @@ use App\Entity\Album;
 
 /** @var Album $album */
 $album = $data['album'];
+$favorite = !empty($data['favorites']);
 
 $divTracks = '';
 for ($j = 0; $j < count($album->getTracks()); $j++) {
@@ -42,7 +43,7 @@ function getTypeSymbol(string $type): string {
     else return '©';
 }
 
-$artistTag = implode('•', array_map(function ($item) {
+$artistTag = implode(' • ', array_map(function ($item) {
     $artistUrl = $item->getExternalUrl()->getSpotify() ?? '#';
     return '<a class="link-light text-decoration-none hover-underline fw-bold" href="'.$artistUrl.'" target="_blank">'.$item->getName().'</a>';
 }, $album->getArtists()));
@@ -69,6 +70,9 @@ echo '<div class="offcanvas-header">
                             '.$album->getTotalTracks().' tracks
                          </span>
                     </div>
+                    <button type="button" class="album-fav-btn favorite-button fav-btn-rounded '.($favorite ? 'is-fav' : '').'">
+                        <i class="bi bi-star'.($favorite ? '-fill' : '').'"></i>
+                    </button>
                 </div>
                 <table class="table grey-color mt-3">
                       <thead>

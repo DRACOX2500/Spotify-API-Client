@@ -42,9 +42,9 @@ for ($i = 0; $i < count($albums); $i++) {
                        </tr>';
     }
 
-    $artistTag = implode('•', array_map(function ($item) {
+    $artistTag = implode(' • ', array_map(function ($item) {
         $artistUrl = $item->getExternalUrl()->getSpotify() ?? '#';
-        return '<a class="link-light text-decoration-none hover-underline" href="'.$artistUrl.'" target="_blank">'.$item->getName().'</a>';
+        return '<a class="link-light text-decoration-none hover-underline fw-bold" href="'.$artistUrl.'" target="_blank">'.$item->getName().'</a>';
     }, $album->getArtists()));
 
     $divs .= '<div class="accordion-item bg-main">

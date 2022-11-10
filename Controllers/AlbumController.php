@@ -105,13 +105,14 @@ class AlbumController extends Controller
         if (isset($albumId)) {
             $json = self::getAlbum($albumId);
             $album = Album::fromJson(json_decode($json, true));
+            $favorites = Album::getDefaultInstance()->findBy(['idSpotify' => $album->getIdSpotify()]);
 
             $trackJson = TrackController::getTracksFromAlbum($album->getIdSpotify(), 50);
             $trackResult = json_decode($trackJson, true);
             $album->setTracksFromJson($trackResult['items']);
 
 
-            $this->render('album/ajax-single', compact('album'), 'empty');
+            $this->render('album/ajax-single', compact('album', 'favorites'), 'empty');
         }
         else
         {

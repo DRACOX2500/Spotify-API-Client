@@ -101,7 +101,7 @@ function play() {
 	if (source === '#') return
 
 
-	if (player.paused || player.src !== source) {
+	if (player.paused || source && player.src !== source) {
 		if (player.src !== source) pause(btnElement)
 
 		player.setAttribute('src', source)
@@ -136,7 +136,7 @@ function deleteAlbumFav(albumID, callback) {
 	)
 }
 
-function activateFavAlbumBtnEffect(albumCache, id) {
+function activateFavAlbumBtnEffect(cache, id, primaryId) {
 
 
 	const toggleFav = function () {
@@ -174,7 +174,8 @@ function activateFavAlbumBtnEffect(albumCache, id) {
 				}
 			})
 		}
-		albumsCache.set(id, asideMenuAlbum.innerHTML);
+		console.log('Save ', primaryId ?? id)
+		cache.set(primaryId ?? id, asideMenuAlbum.innerHTML);
 	};
 
 	const favoriteButtons = document.getElementsByClassName("album-fav-btn");
@@ -227,7 +228,8 @@ function showAlbums(artistID, callback) {
 
 		hideAlbumLoading();
 		callback();
-		activateFavAlbumBtnEffect(albumsAndTracksCache);
+		console.log('Open ', artistID)
+		activateFavAlbumBtnEffect(albumsAndTracksCache, null, artistID);
 		albumAside.show();
 	}
 
