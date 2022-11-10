@@ -5,6 +5,8 @@ namespace App\Entity;
 class Album extends Model
 {
 
+    public int $id;
+
     /**
      * @var Track[]
      */
@@ -20,7 +22,7 @@ class Album extends Model
      * @param ExternalUrl $externalUrls
      * @param array|null $genres
      * @param string $href
-     * @param string $id
+     * @param string $idSpotify
      * @param array $images
      * @param string|null $label
      * @param string $name
@@ -32,27 +34,53 @@ class Album extends Model
      * @param string $uri
      */
     public function __construct(
-        private ?string $albumGroup,
-        private string $albumType,
-        private array $artists,
-        private array $availableMarkets,
-        private ?array $copyrights,
-        private ?array $externalIds,
-        private ExternalUrl $externalUrls,
-        private ?array $genres,
-        private string $href,
-        private string $id,
-        private array $images,
-        private ?string $label,
-        private string $name,
-        private ?int $popularity,
-        private string $releaseDate,
-        private string $releaseDatePrecision,
-        private int $totalTracks,
-        private string $type,
-        private string $uri,
+        public ?string     $albumGroup,
+        public string      $albumType,
+        public array       $artists,
+        public array       $availableMarkets,
+        public ?array      $copyrights,
+        public ?array      $externalIds,
+        public ExternalUrl $externalUrls,
+        public ?array      $genres,
+        public string      $href,
+        public string      $idSpotify,
+        public array       $images,
+        public ?string     $label,
+        public string      $name,
+        public ?int        $popularity,
+        public string      $releaseDate,
+        public string      $releaseDatePrecision,
+        public int         $totalTracks,
+        public string      $type,
+        public string      $uri,
     )
     {
+        $this->table = 'album';
+    }
+
+    public static function getDefaultInstance(): self
+    {
+        return new Album(
+            null,
+            '',
+            array(),
+            array(),
+            null,
+            null,
+            new ExternalUrl(''),
+            null,
+            '',
+            '',
+            array(),
+            null,
+            '',
+            0,
+            '',
+            '',
+            0,
+            '',
+            ''
+        );
     }
 
     /**
@@ -196,9 +224,9 @@ class Album extends Model
     /**
      * @return string
      */
-    public function getId(): string
+    public function getIdSpotify(): string
     {
-        return $this->id;
+        return $this->idSpotify;
     }
 
     /**
@@ -318,12 +346,12 @@ class Album extends Model
     }
 
     /**
-     * @param string $id
+     * @param string $idSpotify
      * @return self
      */
-    public function setId(string $id): self
+    public function setIdSpotify(string $idSpotify): self
     {
-        $this->id = $id;
+        $this->idSpotify = $idSpotify;
         return $this;
     }
 

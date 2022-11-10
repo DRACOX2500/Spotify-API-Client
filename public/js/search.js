@@ -116,6 +116,74 @@ function play() {
 	}
 }
 
+function insertAlbumFav(albumID, callback) {
+	ajax(
+		'/album/insert/' + albumID,
+		function () {
+			if (!this.responseText) return;
+			callback(JSON.parse(this.responseText));
+		}
+	)
+}
+
+function deleteAlbumFav(albumID, callback) {
+	ajax(
+		'/album/delete/' + albumID,
+		function () {
+			if (!this.responseText) return;
+			callback(JSON.parse(this.responseText));
+		}
+	)
+}
+
+function activateFavAlbumBtnEffect(albumCache, id) {
+
+
+	const toggleFav = function () {
+		if (!id) {
+			id = this.parentElement.id.split('a-')[1];
+		}
+
+		if (this.classList.contains('is-fav')) {
+			this.classList.remove('is-fav');
+			this.children[0].classList.remove('bi-star-fill');
+			this.children[0].classList.add('bi-star');
+			deleteAlbumFav(id, (result) => {
+				if (result.code === 200) {
+					this.children[0].classList.remove('bi-star-fill');
+					this.children[0].classList.add('bi-star');
+				}
+				else {
+					this.children[0].classList.remove('bi-star');
+					this.children[0].classList.add('bi-star-fill');
+				}
+			})
+		}
+		else {
+			this.classList.add('is-fav')
+			this.children[0].classList.remove('bi-star');
+			this.children[0].classList.add('bi-star-fill');
+			insertAlbumFav(id, (result) => {
+				if (result.code === 200 || result.code === 409) {
+					this.children[0].classList.remove('bi-star');
+					this.children[0].classList.add('bi-star-fill');
+				}
+				else {
+					this.children[0].classList.remove('bi-star-fill');
+					this.children[0].classList.add('bi-star');
+				}
+			})
+		}
+		albumsCache.set(id, asideMenuAlbum.innerHTML);
+	};
+
+	const favoriteButtons = document.getElementsByClassName("album-fav-btn");
+
+	for (let i = 0; i < favoriteButtons.length; i++) {
+		favoriteButtons[i].addEventListener('click', toggleFav.bind(favoriteButtons[i]));
+	}
+}
+
 function showAlbum() {
 	const id = this.parentNode.parentElement.id;
 	const value = albumsCache.get(id);
@@ -126,7 +194,7 @@ function showAlbum() {
 		for (let i = 0; i < playButtons.length; i++) {
 			playButtons[i].addEventListener('click', play.bind(playButtons[i]))
 		}
-
+		activateFavAlbumBtnEffect(albumsCache, id);
 		albumAside.show();
 	}
 
@@ -159,6 +227,7 @@ function showAlbums(artistID, callback) {
 
 		hideAlbumLoading();
 		callback();
+		activateFavAlbumBtnEffect(albumsAndTracksCache);
 		albumAside.show();
 	}
 

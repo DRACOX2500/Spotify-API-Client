@@ -56,7 +56,7 @@ for ($i = 0; $i < count($albums); $i++) {
                         </h2>
                         <div id="collapse-'.$i.'" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                               <div class="accordion-body p-0">
-                                    <div class="album-data">
+                                    <div id="a-'.$album->getIdSpotify().'" class="album-data">
                                         <img src="'.$album->getImages()[0]->getUrl().'" alt="album_picture">
                                         <div>
                                              <span class="al-type text-light">'.strtoupper($album->getAlbumType()).'</span>
@@ -69,6 +69,9 @@ for ($i = 0; $i < count($albums); $i++) {
                                                 '.$album->getTotalTracks().' tracks
                                              </span>
                                         </div>
+                                        <button type="button" class="album-fav-btn favorite-button fav-btn-rounded '.($album->id !== -1 ? 'is-fav' : '').'">
+                                            <i class="bi bi-star'.($album->id !== -1 ? '-fill' : '').'"></i>
+                                        </button>
                                     </div>
                                     <table class="table grey-color mt-3">
                                           <thead>

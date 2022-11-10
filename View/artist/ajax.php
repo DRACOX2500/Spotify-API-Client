@@ -21,7 +21,7 @@ echo '<div class="offcanvas-header">
                         <a href="'.$artist->getExternalUrl()->getSpotify().'" target="_blank">
                                 <img src="'.$image.'" alt="artist image">
                             </a>
-                        <button type="button" class="abs-btn favorite-button '.($favorite ? 'is-fav' : '').'">
+                        <button type="button" class="abs-btn fav-btn-rounded favorite-button '.($favorite ? 'is-fav' : '').'">
                             <i class="bi bi-star'.($favorite ? '-fill' : '').'"></i>
                         </button>
                     </div>

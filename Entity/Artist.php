@@ -49,6 +49,7 @@ class Artist extends Model
 
     /**
      * @param ExternalUrl $externalUrl
+     * @return Artist
      */
     public function setExternalUrl(ExternalUrl $externalUrl): self
     {
@@ -66,6 +67,7 @@ class Artist extends Model
 
     /**
      * @param Follower $follower
+     * @return Artist
      */
     public function setFollower(Follower $follower): self
     {
@@ -83,6 +85,7 @@ class Artist extends Model
 
     /**
      * @param array $genres
+     * @return Artist
      */
     public function setGenres(array $genres): self
     {
@@ -100,6 +103,7 @@ class Artist extends Model
 
     /**
      * @param string $href
+     * @return Artist
      */
     public function setHref(string $href): self
     {
@@ -117,6 +121,7 @@ class Artist extends Model
 
     /**
      * @param string $idSpotify
+     * @return Artist
      */
     public function setIdSpotify(string $idSpotify): self
     {
@@ -151,6 +156,7 @@ class Artist extends Model
 
     /**
      * @param string $name
+     * @return Artist
      */
     public function setName(string $name): self
     {
@@ -168,6 +174,7 @@ class Artist extends Model
 
     /**
      * @param int $popularity
+     * @return Artist
      */
     public function setPopularity(int $popularity): self
     {
@@ -202,6 +209,7 @@ class Artist extends Model
 
     /**
      * @param string $uri
+     * @return Artist
      */
     public function setUri(string $uri): self
     {

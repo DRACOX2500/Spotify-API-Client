@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Core\Utils;
 use App\Entity\Album;
-use App\Entity\Artist;
 
 class AlbumController extends Controller
 {
@@ -62,11 +61,23 @@ class AlbumController extends Controller
             }
 
             $albums = array_map(static function ($data) {
-                return Album::fromJson($data);
+                $album = Album::fromJson($data);
+                $album->id = -1;
+                return $album;
             }, $result['items']);
 
+            $favorites = Album::getDefaultInstance()->findAll();
+            if (!empty($favorites)) {
+                foreach ($favorites as $fav) {
+                    $array = json_decode(json_encode($albums),true);
+                    $key = array_search($fav->idSpotify, array_column($array, 'idSpotify'));
+                    if (is_bool($key)) continue;
+                    $albums[$key]->id = $fav->id;
+                }
+            }
+
             foreach ($albums as $album) {
-                $trackJson = TrackController::getTracksFromAlbum($album->getId(), 50);
+                $trackJson = TrackController::getTracksFromAlbum($album->getIdSpotify(), 50);
                 $trackResult = json_decode($trackJson, true);
                 $album->setTracksFromJson($trackResult['items']);
             }
@@ -95,12 +106,43 @@ class AlbumController extends Controller
             $json = self::getAlbum($albumId);
             $album = Album::fromJson(json_decode($json, true));
 
-            $trackJson = TrackController::getTracksFromAlbum($album->getId(), 50);
+            $trackJson = TrackController::getTracksFromAlbum($album->getIdSpotify(), 50);
             $trackResult = json_decode($trackJson, true);
             $album->setTracksFromJson($trackResult['items']);
 
 
             $this->render('album/ajax-single', compact('album'), 'empty');
+        }
+        else
+        {
+            http_response_code(404);
+        }
+    }
+
+    public function insert(): void
+    {
+        $albumID = Utils::getParams()[2];
+
+        if (isset($albumID)) {
+
+            $album = AlbumController::insertAlbumInDB($albumID);
+            $code = is_int($album) ? $album : 200;
+            $this->render('album/insert', compact('code', 'album'), 'empty');
+        }
+        else
+        {
+            http_response_code(404);
+        }
+    }
+
+    public function delete(): void
+    {
+        $albumID = Utils::getParams()[2];
+
+        if (isset($albumID)) {
+
+            $code = AlbumController::deleteAlbumInDB($albumID);
+            $this->render('album/delete', compact('code'), 'empty');
         }
         else
         {
@@ -147,5 +189,35 @@ class AlbumController extends Controller
         curl_close($ch);
 
         return $result;
+    }
+
+    /**
+     * @param string $albumID
+     * @return int|string
+     */
+    public static function insertAlbumInDB(string $albumID): int|string
+    {
+        $json = AlbumController::getAlbum($albumID);
+        if (is_bool($json)) return 500;
+        $album = Album::fromJson(json_decode($json, true));
+        $res = $album->findBy(['idSpotify' => $album->getIdSpotify()]);
+        if (!empty($res)) return 409;
+
+        $album->create();
+        return $json;
+    }
+
+    /**
+     * @param string $albumID
+     * @return int
+     */
+    public static function deleteAlbumInDB(string $albumID): int
+    {
+        $mock = Album::getDefaultInstance();
+        $res = $mock->findBy(['idSpotify' => $albumID]);
+
+        if (empty($res)) return 404;
+        $mock->delete($res[0]->id);
+        return 200;
     }
 }

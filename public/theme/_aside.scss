@@ -23,6 +23,9 @@
             position: absolute;
             right: 55px;
             bottom: -55px;
+        }
+
+        .fav-btn-rounded {
             font-size: xx-large;
             padding-inline: 20px;
             padding-block: 10px;
@@ -101,6 +104,13 @@
             width: 400px;
             object-fit: cover;
             object-position: center;
+        }
+
+        .fav-btn-rounded {
+            font-size: xx-large;
+            padding-inline: 20px;
+            padding-block: 10px;
+            border-radius: 50%;
         }
 
         & > div {

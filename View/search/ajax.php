@@ -1,8 +1,16 @@
 <?php
+
+use App\Entity\Album;
+use App\Entity\Artist;
+
 $divs_array = array();
 
+/** @var Artist[] $artists */
 $artists = $data['artists'];
+
+/** @var Album[] $albums */
 $albums = $data['albums'];
+
 if (isset($artists)) {
     $i = 0;
     $divs_artist = array_map(function ($artist) {
@@ -40,7 +48,7 @@ if (isset($albums)) {
             $image = $album->getImages()[0]->getUrl();
         }
         return '<div class="col">
-                <div id="' . $album->getId() . '" class="card bg-main-darker album-card" style="width: 18rem;">
+                <div id="' . $album->getIdSpotify() . '" class="card bg-main-darker album-card" style="width: 18rem;">
                     <img src="' . $image . '" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title fw-bold d-block text-truncate">' . $album->getName() . '</h5>

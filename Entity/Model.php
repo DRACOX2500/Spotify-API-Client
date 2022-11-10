@@ -107,6 +107,7 @@ class Model extends Db
 
         // On vérifie si on a des attributs
         if ($attributes !== null) {
+
             // Requête préparée
             $query = $this->db->prepare($sql);
             $query->execute($attributes);
