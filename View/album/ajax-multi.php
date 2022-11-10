@@ -14,8 +14,8 @@ for ($i = 0; $i < count($albums); $i++) {
     $divTracks = '';
     for ($j = 0; $j < count($album->getTracks()); $j++) {
         $track = $album->getTracks()[$j];
-        $artistTag = implode(', ', array_map(function ($item) use ($track) {
-            $artistUrl = $track->getArtists()[0]->getExternalUrl()->getSpotify() ?? '#';
+        $artistTag = implode(', ', array_map(function ($item) {
+            $artistUrl = $item->getExternalUrl()->getSpotify() ?? '#';
             return '<a class="link-secondary text-decoration-none hover-underline" href="'.$artistUrl.'" target="_blank">'.$item->getName().'</a>';
         }, $track->getArtists()));
 
@@ -42,6 +42,11 @@ for ($i = 0; $i < count($albums); $i++) {
                        </tr>';
     }
 
+    $artistTag = implode('•', array_map(function ($item) {
+        $artistUrl = $item->getExternalUrl()->getSpotify() ?? '#';
+        return '<a class="link-light text-decoration-none hover-underline" href="'.$artistUrl.'" target="_blank">'.$item->getName().'</a>';
+    }, $album->getArtists()));
+
     $divs .= '<div class="accordion-item bg-main">
                         <h2 class="accordion-header" id="headingOne">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-'.$i.'" aria-expanded="true" aria-controls="collapse-'.$i.'">
@@ -57,6 +62,8 @@ for ($i = 0; $i < count($albums); $i++) {
                                              <span class="al-type text-light">'.strtoupper($album->getAlbumType()).'</span>
                                              <span class="al-name text-light">'.$album->getName().'</span>
                                              <span>
+                                                '.$artistTag.'
+                                                •
                                                 '.$album->getReleaseDate().'
                                                 •
                                                 '.$album->getTotalTracks().' tracks

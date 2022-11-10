@@ -11,15 +11,20 @@ class Album extends Model
     private array $tracks;
 
     /**
-     * @param string $albumGroup
+     * @param string|null $albumGroup
      * @param string $albumType
      * @param Artist[] $artists
      * @param string[] $availableMarkets
+     * @param Copyright[]|null $copyrights
+     * @param array|null $externalIds
      * @param ExternalUrl $externalUrls
+     * @param array|null $genres
      * @param string $href
      * @param string $id
-     * @param Image[] $images
+     * @param array $images
+     * @param string|null $label
      * @param string $name
+     * @param int|null $popularity
      * @param string $releaseDate
      * @param string $releaseDatePrecision
      * @param int $totalTracks
@@ -31,11 +36,16 @@ class Album extends Model
         private string $albumType,
         private array $artists,
         private array $availableMarkets,
+        private ?array $copyrights,
+        private ?array $externalIds,
         private ExternalUrl $externalUrls,
+        private ?array $genres,
         private string $href,
         private string $id,
         private array $images,
+        private ?string $label,
         private string $name,
+        private ?int $popularity,
         private string $releaseDate,
         private string $releaseDatePrecision,
         private int $totalTracks,
@@ -43,6 +53,96 @@ class Album extends Model
         private string $uri,
     )
     {
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getCopyrights(): ?array
+    {
+        return $this->copyrights;
+    }
+
+    /**
+     * @param array|null $copyrights
+     * @return Album
+     */
+    public function setCopyrights(?array $copyrights): self
+    {
+        $this->copyrights = $copyrights;
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getExternalIds(): ?array
+    {
+        return $this->externalIds;
+    }
+
+    /**
+     * @param array|null $externalIds
+     * @return Album
+     */
+    public function setExternalIds(?array $externalIds): self
+    {
+        $this->externalIds = $externalIds;
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getGenres(): ?array
+    {
+        return $this->genres;
+    }
+
+    /**
+     * @param array|null $genres
+     * @return Album
+     */
+    public function setGenres(?array $genres): self
+    {
+        $this->genres = $genres;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLabel(): ?string
+    {
+        return $this->label;
+    }
+
+    /**
+     * @param string|null $label
+     * @return Album
+     */
+    public function setLabel(?string $label): self
+    {
+        $this->label = $label;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPopularity(): ?int
+    {
+        return $this->popularity;
+    }
+
+    /**
+     * @param int|null $popularity
+     * @return Album
+     */
+    public function setPopularity(?int $popularity): self
+    {
+        $this->popularity = $popularity;
+        return $this;
     }
 
     /**
@@ -340,13 +440,20 @@ class Album extends Model
                 return Artist::fromJson($data);
             }, $data['artists']),
             $data['available_markets'],
+                isset($data['copyrights']) ? array_map(static function($data) {
+                    return Copyright::fromJson($data);
+                }, $data['copyrights']) : null,
+            $data['genres'] ?? null,
             ExternalUrl::fromJson($data['external_urls']),
+            $data['genres'] ?? null,
             $data['href'],
             $data['id'],
             array_map(static function($data) {
                 return Image::fromJson($data);
             }, $data['images']),
+                $data['label'] ?? null,
             $data['name'],
+                $data['popularity'] ?? null,
             $data['release_date'],
             $data['release_date_precision'],
             $data['total_tracks'],

@@ -1,6 +1,8 @@
 <?php
 use App\Core\Utils;
+use App\Entity\Album;
 
+/** @var Album $album */
 $album = $data['album'];
 
 $divTracks = '';
@@ -34,6 +36,21 @@ for ($j = 0; $j < count($album->getTracks()); $j++) {
                        </tr>';
 }
 
+function getTypeSymbol(string $type): string {
+    if ($type === 'P') return '℗';
+    else if ($type === 'R') return '®';
+    else return '©';
+}
+
+$artistTag = implode('•', array_map(function ($item) {
+    $artistUrl = $item->getExternalUrl()->getSpotify() ?? '#';
+    return '<a class="link-light text-decoration-none hover-underline fw-bold" href="'.$artistUrl.'" target="_blank">'.$item->getName().'</a>';
+}, $album->getArtists()));
+
+$copyrights = implode('', array_map(function ($item) {
+    return '<span>' . getTypeSymbol($item->getType()) . ' ' . $item->getText() . '</span>';
+}, $album->getCopyrights()));
+
 echo '<div class="offcanvas-header">
                 <h3 class="offcanvas-title fs-3" id="offcanvasBottomLabel">'.$album->getName().' Albums</h3>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -45,6 +62,8 @@ echo '<div class="offcanvas-header">
                          <span class="al-type text-light">'.strtoupper($album->getAlbumType()).'</span>
                          <span class="al-name text-light">'.$album->getName().'</span>
                          <span>
+                            '.$artistTag.'
+                            •
                             '.$album->getReleaseDate().'
                             •
                             '.$album->getTotalTracks().' tracks
@@ -63,4 +82,5 @@ echo '<div class="offcanvas-header">
                         '.$divTracks.'
                       </tbody>
                 </table>
+                <div class="d-flex flex-column text-secondary py-3">'.$copyrights.'</div>
             </div>';

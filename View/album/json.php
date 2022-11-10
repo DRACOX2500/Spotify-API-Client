@@ -1,2 +1,2 @@
 <?php
-echo $data['albums'];
+echo $data['json'];

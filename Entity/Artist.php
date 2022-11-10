@@ -218,14 +218,14 @@ class Artist extends Model
         return new self(
             ExternalUrl::fromJson($data['external_urls']),
             isset($data['followers']) ? Follower::fromJson($data['followers']) : null,
-            isset($data['genres']) ? $data['genres'] : null,
+            $data['genres'] ?? null,
             $data['href'],
             $data['id'],
             isset($data['images']) ? array_map(static function($data) {
                 return Image::fromJson($data);
             }, $data['images']) : null,
             $data['name'],
-            isset($data['popularity']) ? $data['popularity'] : null,
+            $data['popularity'] ?? null,
             $data['type'],
             $data['uri']
         );

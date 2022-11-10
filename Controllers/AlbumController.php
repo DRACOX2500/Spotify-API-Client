@@ -15,8 +15,24 @@ class AlbumController extends Controller
         $limit = Utils::getParams()[3] ?? 20;
 
         if (isset($artistId)) {
-            $albums = self::getAlbumsFromArtist($artistId, $limit);
-            $this->render('album/json', compact('albums'), 'empty');
+            $json = self::getAlbumsFromArtist($artistId, $limit);
+            $this->render('album/json', compact('json'), 'empty');
+        }
+        else
+        {
+            http_response_code(404);
+        }
+
+    }
+
+
+    public function json2(): void
+    {
+        $albumId = Utils::getParams()[2];
+
+        if (isset($albumId)) {
+            $json = self::getAlbum($albumId);
+            $this->render('album/json', compact('json'), 'empty');
         }
         else
         {
@@ -40,6 +56,11 @@ class AlbumController extends Controller
             $json = self::getAlbumsFromArtist($artistId, $limit);
             $result = json_decode($json, true);
 
+            if (isset($result['error'])) {
+                http_response_code($result['status']);
+                return;
+            }
+
             $albums = array_map(static function ($data) {
                 return Album::fromJson($data);
             }, $result['items']);
@@ -51,7 +72,7 @@ class AlbumController extends Controller
             }
 
 
-            $this->render('album/ajax', compact('albums'), 'empty');
+            $this->render('album/ajax-multi', compact('albums'), 'empty');
         }
         else
         {
@@ -79,7 +100,7 @@ class AlbumController extends Controller
             $album->setTracksFromJson($trackResult['items']);
 
 
-            $this->render('album/ajax2', compact('album'), 'empty');
+            $this->render('album/ajax-single', compact('album'), 'empty');
         }
         else
         {
