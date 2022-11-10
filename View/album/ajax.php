@@ -20,7 +20,18 @@ for ($i = 0; $i < count($albums); $i++) {
         }, $track->getArtists()));
 
         $divTracks .= '<tr>
-                              <th scope="row" class="row-track text-center vertical-align-middle">'.($j + 1).'</th>
+                              <th scope="row" class="track-first-index row-track text-center vertical-align-middle">
+                                <span class="pos-num">'.($j + 1).'</span>
+                                <span>
+                                    <button type="button" class="play-btn">
+                                        <i class="bi bi-play-fill fs-4 text-white"></i>
+                                        <i class="bi bi-pause-fill fs-4 text-white d-none"></i>
+                                    </button>
+                                    <audio controls class="play-audio d-none">
+                                        <source src="'.($track->getPreviewUrl() ?? '#').'" />
+                                    </audio>
+                                </span>
+                              </th>
                               <td>
                                     <div class="d-flex flex-column justify-content-between">
                                         <a class="link-light text-decoration-none" href="'.$track->getExternalUrls()->getSpotify().'" target="_blank">'.$track->getName().'</a>

@@ -73,7 +73,6 @@ function search(query, type = null) {
 				cardButton.addEventListener('click', showArtist.bind(cardButton));
 			}
 			for (let cardButton of cardAlbumButtons) {
-				console.log(cardButton)
 				cardButton.addEventListener('click', showAlbum.bind(cardButton));
 			}
 		}
@@ -86,12 +85,48 @@ searchBtn.addEventListener('click', () => {
 	search(searchBar.value)
 })
 
+const player = new Audio();
+
+function pause(btnElement) {
+	player.pause()
+	btnElement.lastElementChild.classList.add('d-none')
+	btnElement.firstElementChild.classList.remove('d-none')
+}
+
+function play() {
+	const btnElement = this
+
+	const audio = btnElement.parentNode.lastElementChild
+	const source = String(audio.firstElementChild.src);
+	if (source === '#') return
+
+
+	if (player.paused || player.src !== source) {
+		if (player.src !== source) pause(btnElement)
+
+		player.setAttribute('src', source)
+		player.play().then(() => {
+			btnElement.lastElementChild.classList.remove('d-none')
+			btnElement.firstElementChild.classList.add('d-none')
+		})
+		setTimeout(() => pause(btnElement), 30000)
+	}
+	else {
+		pause(btnElement)
+	}
+}
+
 function showAlbum() {
 	const id = this.parentNode.parentElement.id;
 	const value = albumsCache.get(id);
 	const open = (response) => {
 		if (!response) return;
 		asideMenuAlbum.innerHTML = response;
+		const playButtons = document.getElementsByClassName('play-btn');
+		for (let i = 0; i < playButtons.length; i++) {
+			playButtons[i].addEventListener('click', play.bind(playButtons[i]))
+		}
+
 		albumAside.show();
 	}
 
@@ -116,7 +151,13 @@ function showAlbums(artistID, callback) {
 	const open = (response) => {
 		if (!response) return;
 		asideMenuAlbum.innerHTML = response;
-		hideAlbumLoading()
+
+		const playButtons = document.getElementsByClassName('play-btn');
+		for (let i = 0; i < playButtons.length; i++) {
+			playButtons[i].addEventListener('click', play.bind(playButtons[i]))
+		}
+
+		hideAlbumLoading();
 		callback();
 		albumAside.show();
 	}

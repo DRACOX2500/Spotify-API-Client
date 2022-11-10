@@ -131,8 +131,38 @@
                 border-radius: 4px;
                 padding-block: 10px;
 
+                th {
+                    width: 170px;
+                }
+
                 &:hover {
                     background-color: map-get($main, ligther-plus);
+
+                    .track-first-index {
+                        span:first-child {
+                            display: none;
+                        }
+
+                        span:last-child {
+                            display: block;
+                        }
+                    }
+                }
+
+                .track-first-index {
+                    span:first-child {
+                        display: block;
+                        padding-inline: 17.5px;
+                    }
+
+                    span:last-child {
+                        display: none;
+
+                        .play-btn {
+                            background-color: #0000;
+                            border: none;
+                        }
+                    }
                 }
             }
 
