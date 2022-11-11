@@ -5,8 +5,6 @@ namespace App\Entity;
 class Artist extends Model
 {
 
-    public int $id;
-
     public function __construct(
         protected ExternalUrl $externalUrl,
         protected ?Follower   $follower,

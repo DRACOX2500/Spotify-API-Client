@@ -29,6 +29,10 @@ $secondary: (
         darker: #10a643
 );
 
+.secondary-color {
+    color: map-get($theme, secondary);
+}
+
 .bg-main {
     background-color: map-get($main, main);
     color: white;

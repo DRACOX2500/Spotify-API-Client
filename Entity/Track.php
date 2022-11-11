@@ -1,7 +1,7 @@
 <?php
 namespace App\Entity;
 
-class Track
+class Track extends Model
 {
 
     /**
@@ -9,34 +9,50 @@ class Track
      * @param string[] $availableMarkets
      * @param int $discNumber
      * @param int $durationMs
-     * @param bool $explicit
      * @param ExternalUrl $externalUrls
      * @param string $href
-     * @param string $id
-     * @param bool $isLocal
+     * @param string $idSpotify
      * @param string $name
-     * @param |null $previewUrl
+     * @param string|null $previewUrl
      * @param int $trackNumber
      * @param string $type
      * @param string $uri
      */
     public function __construct(
-        private array $artists,
-        private array $availableMarkets,
-        private int $discNumber,
-        private int $durationMs,
-        private bool $explicit,
-        private ExternalUrl $externalUrls,
-        private string $href,
-        private string $id,
-        private bool $isLocal,
-        private string $name,
-        private $previewUrl,
-        private int $trackNumber,
-        private string $type,
-        private string $uri,
+        public array       $artists,
+        public array       $availableMarkets,
+        public int         $discNumber,
+        public int         $durationMs,
+        public ExternalUrl $externalUrls,
+        public string      $href,
+        public string      $idSpotify,
+        public string      $name,
+        public ?string     $previewUrl,
+        public int         $trackNumber,
+        public string      $type,
+        public string      $uri,
     )
     {
+        $this->table = 'track';
+    }
+
+    public static function getDefaultInstance(): self
+    {
+        return new Track(
+            array(),
+            array(),
+            0,
+            0,
+            new ExternalUrl(''),
+            '',
+            '',
+            '',
+            null,
+            0,
+            '',
+            '',
+            ''
+        );
     }
 
     /**
@@ -98,9 +114,9 @@ class Track
     /**
      * @return string
      */
-    public function getId(): string
+    public function getIdSpotify(): string
     {
-        return $this->id;
+        return $this->idSpotify;
     }
 
     /**
@@ -222,12 +238,12 @@ class Track
     }
 
     /**
-     * @param string $id
+     * @param string $idSpotify
      * @return self
      */
-    public function setId(string $id): self
+    public function setIdSpotify(string $idSpotify): self
     {
-        $this->id = $id;
+        $this->idSpotify = $idSpotify;
         return $this;
     }
 
@@ -304,11 +320,9 @@ class Track
             $data['available_markets'],
             $data['disc_number'],
             $data['duration_ms'],
-            $data['explicit'],
             ExternalUrl::fromJson($data['external_urls']),
             $data['href'],
             $data['id'],
-            $data['is_local'],
             $data['name'],
             $data['preview_url'] ?? null,
             $data['track_number'],

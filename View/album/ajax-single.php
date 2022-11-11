@@ -14,7 +14,7 @@ for ($j = 0; $j < count($album->getTracks()); $j++) {
         return '<a class="link-secondary text-decoration-none hover-underline" href="'.$artistUrl.'" target="_blank">'.$item->getName().'</a>';
     }, $track->getArtists()));
 
-    $divTracks .= '<tr>
+    $divTracks .= '<tr id="t-'.$track->getIdSpotify().'"> 
                               <th scope="row" class="track-first-index row-track text-center vertical-align-middle">
                                 <span class="pos-num">'.($j + 1).'</span>
                                 <span>
@@ -27,11 +27,15 @@ for ($j = 0; $j < count($album->getTracks()); $j++) {
                                     </audio>
                                 </span>
                               </th>
-                              <td>
+                              <td class="d-flex flex-row align-items-center justify-content-between">
                                     <div class="d-flex flex-column justify-content-between">
                                         <a class="link-light text-decoration-none" href="'.$track->getExternalUrls()->getSpotify().'" target="_blank">'.$track->getName().'</a>
                                         <div class="text-secondary">'.$artistTag.'</div>
                                     </div>
+                                    <button type="button" class="like-track-btn">
+                                        <i class="bi bi-heart"></i>
+                                        <i class="bi bi-heart-fill secondary-color d-none"></i>
+                                    </button>
                               </td>
                               <td class="vertical-align-middle">'.Utils::millisecondToMinSecFormat($track->getDurationMs()).'</td>
                        </tr>';

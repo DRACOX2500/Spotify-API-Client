@@ -12,6 +12,15 @@ class Model extends Db
     // Instance de Db
     private $db;
 
+    public int $id = -1;
+
+    /**
+     * @return bool
+     */
+    public function isFavorite(): bool
+    {
+        return $this->id !== -1;
+    }
 
     public function findAll(): bool|array
     {

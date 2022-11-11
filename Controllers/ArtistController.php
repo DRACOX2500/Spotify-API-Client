@@ -99,6 +99,7 @@ class ArtistController extends Controller
         $res = $artist->findBy(['idSpotify' => $artist->getIdSpotify()]);
         if (!empty($res)) return 409;
 
+        unset($artist->id);
         $artist->create();
         return $json;
     }
@@ -114,6 +115,6 @@ class ArtistController extends Controller
 
         if (empty($res)) return 404;
         $mock->delete($res[0]->id);
-        return 202;
+        return 200;
     }
 }

@@ -5,8 +5,6 @@ namespace App\Entity;
 class Album extends Model
 {
 
-    public int $id;
-
     /**
      * @var Track[]
      */

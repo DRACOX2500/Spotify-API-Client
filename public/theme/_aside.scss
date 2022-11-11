@@ -183,6 +183,19 @@
                         border-bottom: 0;
                     }
                 }
+
+                .like-track-btn {
+                    background-color: #0000;
+                    border: none;
+
+                    i:not(.secondary-color) {
+                        color: #b3b3b3;
+                    }
+
+                    &:hover i:not(.secondary-color) {
+                        color: white;
+                    }
+                }
             }
         }
     }

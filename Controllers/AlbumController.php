@@ -204,6 +204,7 @@ class AlbumController extends Controller
         $res = $album->findBy(['idSpotify' => $album->getIdSpotify()]);
         if (!empty($res)) return 409;
 
+        unset($album->id);
         $album->create();
         return $json;
     }
