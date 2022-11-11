@@ -4,7 +4,6 @@ use App\Entity\Album;
 
 /** @var Album $album */
 $album = $data['album'];
-$favorite = !empty($data['favorites']);
 
 $divTracks = '';
 for ($j = 0; $j < count($album->getTracks()); $j++) {
@@ -32,9 +31,9 @@ for ($j = 0; $j < count($album->getTracks()); $j++) {
                                         <a class="link-light text-decoration-none" href="'.$track->getExternalUrls()->getSpotify().'" target="_blank">'.$track->getName().'</a>
                                         <div class="text-secondary">'.$artistTag.'</div>
                                     </div>
-                                    <button type="button" class="like-track-btn">
-                                        <i class="bi bi-heart"></i>
-                                        <i class="bi bi-heart-fill secondary-color d-none"></i>
+                                    <button type="button" class="like-track-btn '.($track->isFavorite() ? 'track-fav' : '').'">
+                                        <i class="bi bi-heart '.($track->isFavorite() ? 'd-none' : '').'"></i>
+                                        <i class="bi bi-heart-fill secondary-color '.($track->isFavorite() ? '' : 'd-none').'"></i>
                                     </button>
                               </td>
                               <td class="vertical-align-middle">'.Utils::millisecondToMinSecFormat($track->getDurationMs()).'</td>
@@ -74,8 +73,8 @@ echo '<div class="offcanvas-header">
                             '.$album->getTotalTracks().' tracks
                          </span>
                     </div>
-                    <button type="button" class="album-fav-btn favorite-button fav-btn-rounded '.($favorite ? 'is-fav' : '').'">
-                        <i class="bi bi-star'.($favorite ? '-fill' : '').'"></i>
+                    <button type="button" class="album-fav-btn favorite-button fav-btn-rounded '.($album->isFavorite() ? 'is-fav' : '').'">
+                        <i class="bi bi-star'.($album->isFavorite() ? '-fill' : '').'"></i>
                     </button>
                 </div>
                 <table class="table grey-color mt-3">

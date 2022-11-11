@@ -136,6 +136,72 @@ function deleteAlbumFav(albumID, callback) {
 	)
 }
 
+function insertTrackFav(albumID, callback) {
+	ajax(
+		'/track/insert/' + albumID,
+		function () {
+			if (!this.responseText) return;
+			callback(JSON.parse(this.responseText));
+		}
+	)
+}
+
+function deleteTrackFav(albumID, callback) {
+	ajax(
+		'/track/delete/' + albumID,
+		function () {
+			if (!this.responseText) return;
+			callback(JSON.parse(this.responseText));
+		}
+	)
+}
+
+function activateFavTrackBtnEffect(cache) {
+
+
+	const toggleFav = function () {
+		const id = this.parentElement.parentElement.id.split('t-')[1];
+
+		if (this.classList.contains('track-fav')) {
+			this.classList.remove('track-fav');
+			this.children[0].classList.remove('d-none');
+			this.children[1].classList.add('d-none');
+			deleteTrackFav(id, (result) => {
+				if (result.code === 200) {
+					this.children[0].classList.remove('d-none');
+					this.children[1].classList.add('d-none');
+				}
+				else {
+					this.children[1].classList.remove('d-none');
+					this.children[0].classList.add('d-none');
+				}
+			})
+		}
+		else {
+			this.classList.add('track-fav')
+			this.children[1].classList.remove('d-none');
+			this.children[0].classList.add('d-none');
+			insertTrackFav(id, (result) => {
+				if (result.code === 200 || result.code === 409) {
+					this.children[1].classList.remove('d-none');
+					this.children[0].classList.add('d-none');
+				}
+				else {
+					this.children[0].classList.remove('d-none');
+					this.children[1].classList.add('d-none');
+				}
+			})
+		}
+		cache.set( id, asideMenuAlbum.innerHTML);
+	};
+
+	const favoriteButtons = document.getElementsByClassName("like-track-btn");
+
+	for (let i = 0; i < favoriteButtons.length; i++) {
+		favoriteButtons[i].addEventListener('click', toggleFav.bind(favoriteButtons[i]));
+	}
+}
+
 function activateFavAlbumBtnEffect(cache, id, primaryId) {
 
 
@@ -174,7 +240,6 @@ function activateFavAlbumBtnEffect(cache, id, primaryId) {
 				}
 			})
 		}
-		console.log('Save ', primaryId ?? id)
 		cache.set(primaryId ?? id, asideMenuAlbum.innerHTML);
 	};
 
@@ -195,6 +260,7 @@ function showAlbum() {
 		for (let i = 0; i < playButtons.length; i++) {
 			playButtons[i].addEventListener('click', play.bind(playButtons[i]))
 		}
+		activateFavTrackBtnEffect(albumsCache)
 		activateFavAlbumBtnEffect(albumsCache, id);
 		albumAside.show();
 	}
@@ -228,7 +294,7 @@ function showAlbums(artistID, callback) {
 
 		hideAlbumLoading();
 		callback();
-		console.log('Open ', artistID)
+		activateFavTrackBtnEffect(albumsAndTracksCache)
 		activateFavAlbumBtnEffect(albumsAndTracksCache, null, artistID);
 		albumAside.show();
 	}

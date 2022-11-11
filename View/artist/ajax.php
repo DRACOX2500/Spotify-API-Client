@@ -1,6 +1,9 @@
 <?php
+
+use App\Entity\Artist;
+
+/** @var Artist $artist */
 $artist = $data['artist'];
-$favorite = !empty($data['res']);
 $image = "/assets/spotify.jpg";
 if (count($artist->getImage()) > 0) {
     $image = $artist->getImage()[0]->getUrl();
@@ -21,8 +24,8 @@ echo '<div class="offcanvas-header">
                         <a href="'.$artist->getExternalUrl()->getSpotify().'" target="_blank">
                                 <img src="'.$image.'" alt="artist image">
                             </a>
-                        <button type="button" class="abs-btn fav-btn-rounded favorite-button '.($favorite ? 'is-fav' : '').'">
-                            <i class="bi bi-star'.($favorite ? '-fill' : '').'"></i>
+                        <button type="button" class="abs-btn fav-btn-rounded favorite-button '.($artist->isFavorite() ? 'is-fav' : '').'">
+                            <i class="bi bi-star'.($artist->isFavorite() ? '-fill' : '').'"></i>
                         </button>
                     </div>
                        

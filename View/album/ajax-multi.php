@@ -19,7 +19,7 @@ for ($i = 0; $i < count($albums); $i++) {
             return '<a class="link-secondary text-decoration-none hover-underline" href="'.$artistUrl.'" target="_blank">'.$item->getName().'</a>';
         }, $track->getArtists()));
 
-        $divTracks .= '<tr>
+        $divTracks .= '<tr  id="t-'.$track->getIdSpotify().'">
                               <th scope="row" class="track-first-index row-track text-center vertical-align-middle">
                                 <span class="pos-num">'.($j + 1).'</span>
                                 <span>
@@ -32,11 +32,15 @@ for ($i = 0; $i < count($albums); $i++) {
                                     </audio>
                                 </span>
                               </th>
-                              <td>
+                              <td  class="d-flex flex-row align-items-center justify-content-between">
                                     <div class="d-flex flex-column justify-content-between">
                                         <a class="link-light text-decoration-none" href="'.$track->getExternalUrls()->getSpotify().'" target="_blank">'.$track->getName().'</a>
                                         <div class="text-secondary">'.$artistTag.'</div>
                                     </div>
+                                    <button type="button" class="like-track-btn '.($track->isFavorite() ? 'track-fav' : '').'">
+                                        <i class="bi bi-heart '.($track->isFavorite() ? 'd-none' : '').'"></i>
+                                        <i class="bi bi-heart-fill secondary-color '.($track->isFavorite() ? '' : 'd-none').'"></i>
+                                    </button>
                               </td>
                               <td class="vertical-align-middle">'.Utils::millisecondToMinSecFormat($track->getDurationMs()).'</td>
                        </tr>';
@@ -69,8 +73,8 @@ for ($i = 0; $i < count($albums); $i++) {
                                                 '.$album->getTotalTracks().' tracks
                                              </span>
                                         </div>
-                                        <button type="button" class="album-fav-btn favorite-button fav-btn-rounded '.($album->id !== -1 ? 'is-fav' : '').'">
-                                            <i class="bi bi-star'.($album->id !== -1 ? '-fill' : '').'"></i>
+                                        <button type="button" class="album-fav-btn favorite-button fav-btn-rounded '.($album->isFavorite() ? 'is-fav' : '').'">
+                                            <i class="bi bi-star'.($album->isFavorite() ? '-fill' : '').'"></i>
                                         </button>
                                     </div>
                                     <table class="table grey-color mt-3">

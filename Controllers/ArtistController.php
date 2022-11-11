@@ -30,7 +30,9 @@ class ArtistController extends Controller
             $result = self::getArtist($artistId);
             $artist = Artist::fromJson(json_decode($result, true));
             $res = $artist->findBy(['idSpotify' => $artist->getIdSpotify()]);
-            $this->render('artist/ajax', compact('artist', 'res'), 'empty');
+            if (!empty($res)) $artist->id = $res[0]->id;
+
+            $this->render('artist/ajax', compact('artist'), 'empty');
         }
         else
         {

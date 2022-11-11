@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\Utils;
 use App\Entity\Album;
+use App\Entity\Track;
 
 class AlbumController extends Controller
 {
@@ -61,9 +62,7 @@ class AlbumController extends Controller
             }
 
             $albums = array_map(static function ($data) {
-                $album = Album::fromJson($data);
-                $album->id = -1;
-                return $album;
+                return Album::fromJson($data);
             }, $result['items']);
 
             $favorites = Album::getDefaultInstance()->findAll();
@@ -80,6 +79,17 @@ class AlbumController extends Controller
                 $trackJson = TrackController::getTracksFromAlbum($album->getIdSpotify(), 50);
                 $trackResult = json_decode($trackJson, true);
                 $album->setTracksFromJson($trackResult['items']);
+
+                $favorites = Track::getDefaultInstance()->findAll();
+                if (!empty($favorites)) {
+                    $tracks = $album->getTracks();
+                    foreach ($favorites as $fav) {
+                        $array = json_decode(json_encode($tracks),true);
+                        $key = array_search($fav->idSpotify, array_column($array, 'idSpotify'));
+                        if (is_bool($key)) continue;
+                        $tracks[$key]->id = $fav->id;
+                    }
+                }
             }
 
 
@@ -111,8 +121,19 @@ class AlbumController extends Controller
             $trackResult = json_decode($trackJson, true);
             $album->setTracksFromJson($trackResult['items']);
 
+            $favorites = Track::getDefaultInstance()->findAll();
+            if (!empty($favorites)) {
+                $tracks = $album->getTracks();
+                foreach ($favorites as $fav) {
+                    $array = json_decode(json_encode($tracks),true);
+                    $key = array_search($fav->idSpotify, array_column($array, 'idSpotify'));
+                    if (is_bool($key)) continue;
+                    $tracks[$key]->id = $fav->id;
+                }
+            }
 
-            $this->render('album/ajax-single', compact('album', 'favorites'), 'empty');
+
+            $this->render('album/ajax-single', compact('album'), 'empty');
         }
         else
         {
