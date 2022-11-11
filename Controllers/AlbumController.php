@@ -110,12 +110,12 @@ class AlbumController extends Controller
     public function ajax2(): void
     {
         $albumId = Utils::getParams()[2];
-        $limit = Utils::getParams()[3] ?? 20;
 
         if (isset($albumId)) {
             $json = self::getAlbum($albumId);
             $album = Album::fromJson(json_decode($json, true));
-            $favorites = Album::getDefaultInstance()->findBy(['idSpotify' => $album->getIdSpotify()]);
+            $favAlbums = Album::getDefaultInstance()->findBy(['idSpotify' => $album->getIdSpotify()]);
+            if (!empty($favAlbums)) $album->id = $favAlbums[0]->id;
 
             $trackJson = TrackController::getTracksFromAlbum($album->getIdSpotify(), 50);
             $trackResult = json_decode($trackJson, true);

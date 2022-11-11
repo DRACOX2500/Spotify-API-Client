@@ -60,7 +60,7 @@ echo '<div class="offcanvas-header">
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body small">
-                <div class="album-data">
+                <div id="a-'.$album->getIdSpotify().'" class="album-data">
                     <img src="'.$album->getImages()[0]->getUrl().'" alt="album_picture">
                     <div>
                          <span class="al-type text-light">'.strtoupper($album->getAlbumType()).'</span>
