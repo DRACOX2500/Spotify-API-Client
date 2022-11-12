@@ -1,6 +1,12 @@
 # IDE
 .idea
 
+# un-versioned JS
+public/js/search-main.js
+
+#NodeJS
+node_modules/
+
 # ENV
 .env
 
