@@ -1,6 +1,9 @@
 # IDE
 .idea
 
+#NodeJS
+node_modules/
+
 # ENV
 .env
 
