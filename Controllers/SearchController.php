@@ -1,8 +1,6 @@
 <?php
 namespace App\Controllers;
 
-
-use App\Core\Utils;
 use App\Entity\Album;
 use App\Entity\Artist;
 
