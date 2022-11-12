@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `track` (
                          `name` VARCHAR(255) NOT NULL DEFAULT '0' COLLATE 'utf8mb3_bin',
                          `type` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb3_bin',
                          `uri` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb3_bin',
-                         `trackNumber` INT(11) NOT NULL,
+                         `trackNumber` INT(11) NOT NULL DEFAULT '0',
                          `discNumber` INT(11) NOT NULL DEFAULT '0',
                          `durationMs` INT(11) NOT NULL DEFAULT '0',
                          `availableMarkets` LONGTEXT NOT NULL COLLATE 'utf8mb3_bin',
