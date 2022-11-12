@@ -19,6 +19,8 @@ class SearchController extends Controller
         $type = $_GET['type'] ?? 'artist,album';
         $limit = $_GET['limit'] ?? 20;
 
+        $query = str_replace(' ', '+', $query);
+
         $json = self::getSearch($query, $type, $limit);
 
         $this->render('search/json', compact('json'), 'empty');
@@ -30,6 +32,8 @@ class SearchController extends Controller
         $query = $_GET['query'] ?? '';
         $type = $_GET['type'] ?? 'artist,album';
         $limit = $_GET['limit'] ?? 20;
+
+        $query = str_replace(' ', '+', $query);
 
         $json = self::getSearch($query, $type, $limit);
         $result = json_decode($json, true);
