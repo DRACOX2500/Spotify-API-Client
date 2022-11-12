@@ -1,4 +1,4 @@
-import { HttpService } from "../HttpService";
+import { HttpService } from "../http-service";
 import { PHP_API } from "../../constant";
 
 export class SearchService {
