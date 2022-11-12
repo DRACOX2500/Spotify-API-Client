@@ -23,4 +23,4 @@
         e.preventDefault();
     });
 </script>
-<script src="/js/search.js"></script>
+<script type="module" src="/js/search-main.js"></script>
