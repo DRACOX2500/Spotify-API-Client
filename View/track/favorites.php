@@ -20,7 +20,7 @@ $table = AlbumHelper::getTableTracks($tracks, true)
 </aside>
 
 <div class="favorite-header track-h-color">
-    <div><i class="bi bi-person-heart"></i></div>
+    <div><i class="bi bi-disc-fill"></i></div>
     <div>
         <span class="fav-section text-light">Favorites</span>
         <span class="fav-section-name text-light">Track</span>
