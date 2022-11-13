@@ -16,11 +16,11 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<script>
-    $("#search-form").submit(function(e) {
+<?php
+use App\Helper\ScriptHelper;
+
+ScriptHelper:: add(null, null ,
+    '$("#search-form").submit(function(e) {
         e.preventDefault();
-    });
-</script>
-<script src="/js/search.js"></script>
+        });');
+ScriptHelper:: add("/js/search.js");
