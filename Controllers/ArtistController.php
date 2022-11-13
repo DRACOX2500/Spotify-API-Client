@@ -7,6 +7,15 @@ use App\Entity\Artist;
 
 class ArtistController extends Controller
 {
+    public function favorites(): void
+    {
+        $res = Artist::getDefaultInstance()->findAll();
+        $artists = array_map(function($item) {
+            return Artist::fromDB($item);
+        }, $res);
+        $this->render('artist/favorites', compact('artists'));
+    }
+
     public function json(): void
     {
         $artistId = Utils::getParams()[2];

@@ -7,6 +7,15 @@ use App\Entity\Track;
 
 class TrackController extends Controller
 {
+    public function favorites(): void
+    {
+        $res = Track::getDefaultInstance()->findAll();
+        $tracks = array_map(function($item) {
+            return Track::fromDB($item);
+        }, $res);
+        $this->render('track/favorites', compact('tracks'));
+    }
+
     public function json(): void
     {
         $trackID = Utils::getParams()[2];

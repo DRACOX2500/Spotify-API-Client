@@ -33,7 +33,7 @@ class AlbumHelper
      * @param int|null $index
      * @return string
      */
-    public static function getTableCellTrack(Track $track, ?int $index = null): string
+    public static function getTableCellTrack(Track $track, ?int $index = null, bool $isAllFavorite = false): string
     {
         $artistTag = implode(', ', array_map(function ($item) use ($track) {
             $artistUrl = $track->getArtists()[0]->getExternalUrl()->getSpotify() ?? '#';
@@ -57,9 +57,9 @@ class AlbumHelper
                                         <a class="link-light text-decoration-none" href="'.$track->getExternalUrls()->getSpotify().'" target="_blank">'.$track->getName().'</a>
                                         <div class="text-secondary">'.$artistTag.'</div>
                                     </div>
-                                    <button type="button" class="like-track-btn '.($track->isFavorite() ? 'track-fav' : '').'">
-                                        <i class="bi bi-heart '.($track->isFavorite() ? 'd-none' : '').'"></i>
-                                        <i class="bi bi-heart-fill secondary-color '.($track->isFavorite() ? '' : 'd-none').'"></i>
+                                    <button type="button" class="like-track-btn '.($track->isFavorite() || $isAllFavorite ? 'track-fav' : '').'">
+                                        <i class="bi bi-heart '.($track->isFavorite() || $isAllFavorite ? 'd-none' : '').'"></i>
+                                        <i class="bi bi-heart-fill secondary-color '.($track->isFavorite() || $isAllFavorite ? '' : 'd-none').'"></i>
                                     </button>
                               </td>
                               <td class="vertical-align-middle">'.Utils::millisecondToMinSecFormat($track->getDurationMs()).'</td>
@@ -70,15 +70,15 @@ class AlbumHelper
      * @param array $tracks
      * @return string
      */
-    public static function getTableTracks(array $tracks): string
+    public static function getTableTracks(array $tracks, bool $isAllFavorite = false): string
     {
         $divTracks = '';
         for ($j = 0; $j < count($tracks); $j++) {
             $track = $tracks[$j];
-            $divTracks .= self::getTableCellTrack($track, $j + 1);
+            $divTracks .= self::getTableCellTrack($track, $j + 1, $isAllFavorite);
         }
 
-        return '<table class="table grey-color mt-3">
+        return '<table class="table tracks grey-color mt-3">
                                           <thead>
                                                 <tr>
                                                   <th scope="col" class="text-center">#</th>

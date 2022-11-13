@@ -130,71 +130,71 @@
             }
         }
     }
+}
 
-    table {
+table.tracks {
 
-        padding-inline: 20px;
+    padding-inline: 20px;
 
-        tbody {
+    tbody {
 
-            tr {
-                border-radius: 4px;
-                padding-block: 10px;
+        tr {
+            border-radius: 4px;
+            padding-block: 10px;
 
-                th {
-                    width: 170px;
-                }
+            th {
+                width: 170px;
+            }
 
-                &:hover {
-                    background-color: map-get($main, ligther-plus);
-
-                    .track-first-index {
-                        span:first-child {
-                            display: none;
-                        }
-
-                        span:last-child {
-                            display: block;
-                        }
-                    }
-                }
+            &:hover {
+                background-color: map-get($main, ligther-plus);
 
                 .track-first-index {
                     span:first-child {
-                        display: block;
-                        padding-inline: 17.5px;
+                        display: none;
                     }
 
                     span:last-child {
-                        display: none;
-
-                        .play-btn {
-                            background-color: #0000;
-                            border: none;
-                        }
+                        display: block;
                     }
                 }
             }
 
-            &.tbody-no-border-bottom {
-                tr {
-                    border-bottom: 0;
-                    &>* {
-                        border-bottom: 0;
-                    }
+            .track-first-index {
+                span:first-child {
+                    display: block;
+                    padding-inline: 17.5px;
                 }
 
-                .like-track-btn {
-                    background-color: #0000;
-                    border: none;
+                span:last-child {
+                    display: none;
 
-                    i:not(.secondary-color) {
-                        color: #b3b3b3;
+                    .play-btn {
+                        background-color: #0000;
+                        border: none;
                     }
+                }
+            }
+        }
 
-                    &:hover i:not(.secondary-color) {
-                        color: white;
-                    }
+        &.tbody-no-border-bottom {
+            tr {
+                border-bottom: 0;
+                &>* {
+                    border-bottom: 0;
+                }
+            }
+
+            .like-track-btn {
+                background-color: #0000;
+                border: none;
+
+                i:not(.secondary-color) {
+                    color: #b3b3b3;
+                }
+
+                &:hover i:not(.secondary-color) {
+                    color: white;
                 }
             }
         }

@@ -23,7 +23,7 @@ function showLoading() {
 showLoading()
 
 function getCardTitle(cardElement) {
-	return cardElement.querySelectorAll('.card-title')[0].innerText;
+	return cardElement.getElementsByClassName('card-title')[0].innerText;
 }
 
 function search(query, type = null) {
@@ -33,7 +33,7 @@ function search(query, type = null) {
 		function () {
 			if (!this.responseText) return;
 			searchList.innerHTML = this.responseText;
-			const cards = [...searchList.childNodes]
+			const cards = [...searchList.children]
 
 			// alphabetic sort
 			cards.sort((a, b) => getCardTitle(a).localeCompare(getCardTitle(b)))

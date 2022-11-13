@@ -330,4 +330,28 @@ class Track extends Model
             $data['uri']
         );
     }
+
+    /**
+     * @param \stdClass $object
+     * @return self
+     */
+    public static function fromDB(\stdClass $object): self
+    {
+        return new self(
+            array_map(static function($data) {
+                return Artist::fromDB($data);
+            }, json_decode($object->artists)),
+            json_decode($object->availableMarkets, true),
+            $object->discNumber,
+            $object->durationMs,
+            ExternalUrl::fromDB(json_decode($object->externalUrls)),
+            $object->href,
+            $object->idSpotify,
+            $object->name,
+            $object->previewUrl ?? null,
+            $object->trackNumber,
+            $object->type,
+            $object->uri
+        );
+    }
 }

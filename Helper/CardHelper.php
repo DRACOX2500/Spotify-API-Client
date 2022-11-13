@@ -60,6 +60,7 @@ class CardHelper
                             <i class="bi bi-plus-square-fill p-2"></i>
                             More details...
                         </button>
-                    </div>';
+                    </div>
+                </div>';
     }
 }

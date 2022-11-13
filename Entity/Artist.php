@@ -243,16 +243,20 @@ class Artist extends Model
      */
     public static function fromDB(\stdClass $object): self
     {
+        $externalUrl = is_string($object->externalUrl) ? json_decode($object->externalUrl) : $object->externalUrl;
+        $followers = is_string($object->follower) ? json_decode($object->follower) : $object->follower;
+        $genres = is_string($object->genres) ? json_decode($object->genres) : $object->genres;
+        $images = is_string($object->image) ? json_decode($object->image) : $object->image;
 
         return new self(
-            ExternalUrl::fromDB($object->externalUrl),
-            isset($object->followers) ? Follower::fromDB($object->followers) : null,
-            $object->genres ?? null,
+            ExternalUrl::fromDB($externalUrl),
+            isset($object->follower) ? Follower::fromDB($followers) : null,
+            $genres ?? null,
             $object->href,
-            $object->id,
-            isset($object->images) ? array_map(static function($data) {
+            $object->idSpotify,
+            isset($object->image) ? array_map(static function($data) {
                 return Image::fromDB($data);
-            }, $object->images) : null,
+            }, $images) : null,
             $object->name,
             $object->popularity ?? null,
             $object->type,

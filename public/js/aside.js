@@ -144,7 +144,7 @@ function activateFavTrackBtnEffect(cache, cacheKey) {
                 }
             })
         }
-        cache.set(cacheKey, asideMenuAlbum.innerHTML);
+        cache?.set(cacheKey, asideMenuAlbum.innerHTML);
     };
 
     const favoriteButtons = document.getElementsByClassName("like-track-btn");

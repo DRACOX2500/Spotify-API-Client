@@ -11,8 +11,7 @@ if (isset($albums)) {
     $divs_albums = array_map(function ($album) {
         return '<div class="col">
                     '.CardHelper::toHTML($album).'
-                </div>
-            </div>';
+                </div>';
     }, $albums);
 }
 
@@ -45,5 +44,5 @@ use App\Helper\ScriptHelper;
 
 ScriptHelper:: add("/js/ajax.js");
 ScriptHelper:: add("/js/aside.js");
-ScriptHelper:: add("/js/favorites.js");
+ScriptHelper:: add("/js/favorite-albums.js");
 
