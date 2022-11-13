@@ -1,0 +1,50 @@
+$fav-color: (
+        album: rgb(138,30,149)
+);
+
+.favorite-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    padding: 20px;
+    background: #121212;
+    background: linear-gradient(0deg, #121212 0%, rgba(map-get($fav-color, album), 0.8) 100%);
+    padding-block-start: 50px;
+    padding-inline: 50px;
+
+    img {
+        width: 400px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    & > div:first-child {
+        box-shadow: 0 4px 60px rgba(0,0,0,.5);
+        background: map-get($fav-color, album);
+        background: linear-gradient(150deg, rgba(map-get($fav-color, album),1) 18%, rgba(24,216,165,1) 100%);
+        min-width: 300px;
+        min-height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 100px;
+    }
+
+    & > div:last-child {
+        padding: 30px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .fav-section {
+            font-family: "GothamMedium", sans-serif;
+            font-size: x-large;
+        }
+
+        .fav-section-name {
+            font-family: "GothamMedium", sans-serif;
+            font-size: xxx-large;
+        }
+    }
+}

@@ -55,4 +55,16 @@ class Follower
 			$data['total']
 		);
 	}
+
+    /**
+     * @param \stdClass $object
+     * @return self
+     */
+    public static function fromDB(\stdClass $object): self
+    {
+        return new self(
+            $object->href ?? null,
+            $object->total
+        );
+    }
 }

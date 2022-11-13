@@ -6,16 +6,16 @@ class Artist extends Model
 {
 
     public function __construct(
-        protected ExternalUrl $externalUrl,
-        protected ?Follower   $follower,
-        protected ?array      $genres,
-        protected string      $href,
-        protected string      $idSpotify,
-        protected ?array      $image,
-        protected string      $name,
-        protected ?int        $popularity,
-        protected string      $type,
-        protected string      $uri,
+        public ExternalUrl $externalUrl,
+        public ?Follower   $follower,
+        public ?array      $genres,
+        public string      $href,
+        public string      $idSpotify,
+        public ?array      $image,
+        public string      $name,
+        public ?int        $popularity,
+        public string      $type,
+        public string      $uri,
     )
     {
         $this->table = "artist";
@@ -234,6 +234,29 @@ class Artist extends Model
             $data['popularity'] ?? null,
             $data['type'],
             $data['uri']
+        );
+    }
+
+    /**
+     * @param \stdClass $object
+     * @return self
+     */
+    public static function fromDB(\stdClass $object): self
+    {
+
+        return new self(
+            ExternalUrl::fromDB($object->externalUrl),
+            isset($object->followers) ? Follower::fromDB($object->followers) : null,
+            $object->genres ?? null,
+            $object->href,
+            $object->id,
+            isset($object->images) ? array_map(static function($data) {
+                return Image::fromDB($data);
+            }, $object->images) : null,
+            $object->name,
+            $object->popularity ?? null,
+            $object->type,
+            $object->uri
         );
     }
 }

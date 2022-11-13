@@ -8,6 +8,14 @@ use App\Entity\Track;
 
 class AlbumController extends Controller
 {
+    public function favorites(): void
+    {
+        $res = Album::getDefaultInstance()->findAll();
+        $albums = array_map(function($item) {
+            return Album::fromDB($item);
+        }, $res);
+        $this->render('album/favorites', compact('albums'));
+    }
 
     public function json(): void
     {

@@ -19,8 +19,13 @@
 <?php
 use App\Helper\ScriptHelper;
 
-ScriptHelper:: add(null, null ,
-    '$("#search-form").submit(function(e) {
-        e.preventDefault();
-        });');
+if (!empty($_GET) && isset($_GET['q']))
+{
+    echo '<script>
+            document.getElementById(\'search-bar\').value = "'.$_GET['q'].'"
+        </script>';
+}
+
+ScriptHelper:: add("/js/ajax.js");
+ScriptHelper:: add("/js/aside.js");
 ScriptHelper:: add("/js/search.js");

@@ -469,7 +469,7 @@ class Album extends Model
                 isset($data['copyrights']) ? array_map(static function($data) {
                     return Copyright::fromJson($data);
                 }, $data['copyrights']) : null,
-            $data['genres'] ?? null,
+            $data['external_ids'] ?? null,
             ExternalUrl::fromJson($data['external_urls']),
             $data['genres'] ?? null,
             $data['href'],
@@ -485,6 +485,37 @@ class Album extends Model
             $data['total_tracks'],
             $data['type'],
             $data['uri']
+        );
+    }
+
+    public static function fromDB(\stdClass $object): self
+    {
+        return new self(
+            $object->albumGroup ?? null,
+            $object->albumType,
+            array_map(static function($data) {
+                return Artist::fromDB($data);
+            }, json_decode($object->artists)),
+            json_decode($object->availableMarkets, true),
+            isset($object->copyrights) ? array_map(static function($data) {
+                return Copyright::fromDB($data);
+            }, json_decode($object->copyrights)) : null,
+            json_decode($object->externalIds, true) ?? null,
+            ExternalUrl::fromDB(json_decode($object->externalUrls)),
+            json_decode($object->genres, true) ?? null,
+            $object->href,
+            $object->idSpotify,
+            array_map(static function($data) {
+                return Image::fromDB($data);
+            }, json_decode($object->images)),
+            $object->label ?? null,
+            $object->name,
+            $object->popularity ?? null,
+            $object->releaseDate,
+            $object->releaseDatePrecision,
+            $object->totalTracks,
+            $object->type,
+            $object->uri
         );
     }
 }

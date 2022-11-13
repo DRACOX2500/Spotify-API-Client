@@ -5,6 +5,9 @@ use App\Helper\ScriptHelper;
 
 // JavaScript Bundle with Popper
 ScriptHelper::addBootstrap();
+
+// jQuery & jQuery-UI
+//ScriptHelper::addJQuery();
 ?>
 
 <!DOCTYPE html>
@@ -31,13 +34,13 @@ ScriptHelper::addBootstrap();
     <div class="container-fluid align-items-center" style="grid-template-columns: 1fr 2fr;">
 
         <div class="d-flex align-items-center">
-            <form id="search-form" class="w-100 me-3 d-flex align-items-center flex-row justify-content-evenly"
+            <form action="/search/index/" id="search-form" class="w-100 me-3 d-flex align-items-center flex-row justify-content-evenly"
                   role="search">
                 <img src="/assets/spotify_logo.png" class="header-logo" alt="app_logo">
 
                 <div class="w-75 d-flex align-items-center flex-row justify-content-evenly">
                     <input id="search-bar" type="search" class="form-control w-100 p-2 text-light bg-dark border border-0"
-                           placeholder="Search..." aria-label="Search" name="q">
+                           placeholder="Search..." aria-label="Search" name="q" required>
 
                     <button id="search-btn" type="submit"
                             class="btn bg-secondary p-2 d-flex flex-row align-items-center">
