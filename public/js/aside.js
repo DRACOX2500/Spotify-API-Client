@@ -20,7 +20,7 @@ const albumsCache = new Map();
 const albumsAndTracksCache = new Map();
 
 let artistAside = null;
-let albumAside = null
+let albumAside = null;
 
 if (asideMenu) artistAside = new bootstrap.Offcanvas(asideMenu);
 if (asideMenuAlbum) albumAside = new bootstrap.Offcanvas(asideMenuAlbum);
@@ -108,7 +108,7 @@ function deleteTrackFav(albumID, callback) {
     )
 }
 
-function activateFavTrackBtnEffect(cache) {
+function activateFavTrackBtnEffect(cache, cacheKey) {
 
 
     const toggleFav = function () {
@@ -144,7 +144,7 @@ function activateFavTrackBtnEffect(cache) {
                 }
             })
         }
-        cache.set( id, asideMenuAlbum.innerHTML);
+        cache.set(cacheKey, asideMenuAlbum.innerHTML);
     };
 
     const favoriteButtons = document.getElementsByClassName("like-track-btn");
@@ -212,7 +212,7 @@ function showAlbum() {
         for (let i = 0; i < playButtons.length; i++) {
             playButtons[i].addEventListener('click', play.bind(playButtons[i]))
         }
-        activateFavTrackBtnEffect(albumsCache)
+        activateFavTrackBtnEffect(albumsCache, id);
         activateFavAlbumBtnEffect(albumsCache, id);
         albumAside.show();
     }
@@ -246,7 +246,7 @@ function showAlbums(artistID, callback) {
 
         hideAlbumLoading();
         callback();
-        activateFavTrackBtnEffect(albumsAndTracksCache)
+        activateFavTrackBtnEffect(albumsAndTracksCache, artistID)
         activateFavAlbumBtnEffect(albumsAndTracksCache, null, artistID);
         albumAside.show();
     }
@@ -347,13 +347,12 @@ function showArtist() {
         artistAside.show();
     }
 
-
     if (value) {
         open(value);
     }
     else {
         ajax(
-            'artist/ajax/' + id,
+            '/artist/ajax/' + id,
             function () {
                 if (!this.responseText) return;
                 artistCache.set(id, this.responseText);
