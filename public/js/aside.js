@@ -38,11 +38,14 @@ function hideAlbumLoading() {
 }
 
 const player = new Audio();
+let timeoutId = null;
 
 function pause(btnElement) {
     player.pause()
     btnElement.lastElementChild.classList.add('d-none')
     btnElement.firstElementChild.classList.remove('d-none')
+    clearTimeout(timeoutId)
+    timeoutId = null;
 }
 
 function play() {
@@ -60,8 +63,20 @@ function play() {
         player.play().then(() => {
             btnElement.lastElementChild.classList.remove('d-none')
             btnElement.firstElementChild.classList.add('d-none')
+
+            // pause all other buttons
+            let playButtons = [...document.getElementsByClassName('play-btn')];
+            playButtons = playButtons.filter((_btn) =>
+                _btn.parentElement.parentElement.parentElement.id
+                !== btnElement.parentElement.parentElement.parentElement.id
+            )
+            playButtons.forEach((_btn) => {
+                _btn.lastElementChild.classList.add('d-none')
+                _btn.firstElementChild.classList.remove('d-none')
+            })
         })
-        setTimeout(() => pause(btnElement), 30000)
+        if (timeoutId !== null) clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => pause(btnElement), 30000)
     }
     else {
         pause(btnElement)
