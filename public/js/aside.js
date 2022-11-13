@@ -19,9 +19,11 @@ const artistCache = new Map();
 const albumsCache = new Map();
 const albumsAndTracksCache = new Map();
 
-const artistAside = new bootstrap.Offcanvas(asideMenu);
+let artistAside = null;
+let albumAside = null
 
-const albumAside = new bootstrap.Offcanvas(asideMenuAlbum);
+if (asideMenu) artistAside = new bootstrap.Offcanvas(asideMenu);
+if (asideMenuAlbum) albumAside = new bootstrap.Offcanvas(asideMenuAlbum);
 
 function showAlbumLoading() {
     document.getElementsByTagName('html')[0].style.setProperty('overflow-y', 'hidden');
