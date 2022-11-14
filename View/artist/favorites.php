@@ -32,7 +32,7 @@ $cards = implode('', $divs_artists);
     <div><i class="bi bi-person-heart"></i></div>
     <div>
         <span class="fav-section text-light">Favorites</span>
-        <span class="fav-section-name text-light">Artist</span>
+        <span class="fav-section-name text-light">Artists</span>
         <span> <?= count($artists) . ' ' . (count($artists) > 1 ? 'Artists' : 'Artist') ?> </span>
     </div>
 </div>

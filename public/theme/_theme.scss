@@ -43,6 +43,11 @@ $secondary: (
     color: white;
 }
 
+.bg-main-lighter {
+    background-color: map-get($main, darker);
+    color: white;
+}
+
 .bg-secondary {
     background-color: map-get($theme, secondary) !important;
 }

@@ -3,18 +3,6 @@ const asideMenu = document.getElementById('aside-menu');
 const asideMenuAlbum = document.getElementById('aside-album-list');
 const overLoading = document.getElementById('over-loading');
 
-function ajax(url, callback, method = 'GET') {
-	const xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = callback;
-	xmlhttp.open(
-		method,
-		url,
-		true
-	);
-	xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	xmlhttp.send();
-}
-
 const artistCache = new Map();
 const albumsCache = new Map();
 const albumsAndTracksCache = new Map();

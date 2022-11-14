@@ -52,27 +52,42 @@ ScriptHelper::addBootstrap();
         </div>
     </div>
 </header>
-<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">-->
-<!--    <a class="navbar-brand" href="/">Mes pages</a>-->
-<!--    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"-->
-<!--            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--        <span class="navbar-toggler-icon"></span>-->
-<!--    </button>-->
-<!---->
-<!--    <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--        <ul class="navbar-nav mr-auto">-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="/">Accueil</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="/test">Test</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="/search">Search</a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--</nav>-->
+<nav class="d-none">
+    <ul class="dropdown-menu dropdown-menu-dark bg-main-darker d-block position-static mx-0 border-0 shadow w-220px">
+        <li>
+            <a class="dropdown-item d-flex gap-2 align-items-center" href="/">
+                <i class="bi bi-house"></i>
+                Home
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item d-flex gap-2 align-items-center" href="/search">
+                <i class="bi bi-search"></i>
+                Search
+            </a>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+        <div class="fs-5 ps-3 fw-bold">Favorites</div>
+        <li>
+            <a class="dropdown-item d-flex gap-2 align-items-center" href="/artist/favorites">
+                <i class="bi bi-person-heart"></i>
+                Artists
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item d-flex gap-2 align-items-center" href="/album/favorites">
+                <i class="bi bi-bookmark-heart-fill"></i>
+                Albums
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item d-flex gap-2 align-items-center" href="/track/favorites">
+                <i class="bi bi-disc-fill"></i>
+                Tracks
+            </a>
+        </li>
+    </ul>
+</nav>
 
     <main class="bg-main">
         <!--        --><?php //if(!empty($_SESSION['erreur'])): ?>
@@ -88,6 +103,7 @@ ScriptHelper::addBootstrap();
         <?= $contenu ?>
     </main>
 
+    <script src="/js/nav.js"></script>
     <?= ScriptHelper::toHTML() ?>
 
 </body>

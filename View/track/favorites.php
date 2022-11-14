@@ -23,7 +23,7 @@ $table = AlbumHelper::getTableTracks($tracks, true)
     <div><i class="bi bi-disc-fill"></i></div>
     <div>
         <span class="fav-section text-light">Favorites</span>
-        <span class="fav-section-name text-light">Track</span>
+        <span class="fav-section-name text-light">Tracks</span>
         <span> <?= count($tracks) . ' ' . (count($tracks) > 1 ? 'Tracks' : 'Track') ?> </span>
     </div>
 </div>

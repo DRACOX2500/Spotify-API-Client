@@ -10,6 +10,7 @@ class Utils
         $input = floor($milliseconds / 1000);
 
         $seconds = $input % 60;
+        if ($seconds < 10) $seconds = '0' . $seconds;
         $input = floor($input / 60);
 
         $minutes = $input % 60;
