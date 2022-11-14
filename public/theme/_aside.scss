@@ -1,0 +1,202 @@
+#aside-menu {
+    border-right: solid 10px #18d860;
+    width: 500px;
+
+    .offcanvas-body {
+        img {
+            width: 300px;
+            max-height: 300px;
+            object-fit: cover;
+            object-position: center;
+            margin-inline: calc((100% - 300px) / 2);
+            border-radius: 50%;
+            align-self: center;
+            border: solid 2px #18d860;
+
+            &:hover {
+                border: solid 4px #18d860;
+                cursor: pointer;
+            }
+        }
+
+        .abs-btn {
+            position: absolute;
+            right: 55px;
+            bottom: -55px;
+        }
+
+        .fav-btn-rounded {
+            font-size: xx-large;
+            padding-inline: 20px;
+            padding-block: 10px;
+            border-radius: 50%;
+        }
+
+        .stats {
+            -webkit-box-shadow: 0 10px 20px rgba(map-get($theme, secondary),.3);
+            box-shadow: 0 10px 20px rgba(map-get($theme, secondary),.3);
+
+            &:hover {
+                -webkit-box-shadow: 0 20px 40px rgba(map-get($theme, secondary),.3);
+                box-shadow: 0 20px 40px rgba(map-get($theme, secondary),.3);
+                -webkit-transform: translateY(-5px);
+                -moz-transform: translateY(-5px);
+                -ms-transform: translateY(-5px);
+                -o-transform: translateY(-5px);
+                transform: translateY(-5px);
+            }
+        }
+
+        .badge-list {
+            max-height: 86px;
+            overflow: auto;
+        }
+    }
+}
+
+#aside-album-list {
+    border-top: solid 10px #18d860;
+    height: 80vh;
+    overflow: auto;
+
+    .accordion-item {
+        border: none;
+        border-bottom: solid 1px #404040;
+
+        .accordion-button {
+
+            color: white;
+            background-color: map-get($theme, main);
+            &:not(.collapsed) {
+                background-color: map-get($theme, secondary);
+
+                span {
+                    background-color: map-get($theme, main);
+                    color: white !important;
+                }
+            }
+            &:focus {
+                border-color: #18d860;
+            }
+
+            ::after {
+                color: white;
+            }
+
+            span {
+                background-color: map-get($theme, secondary);
+            }
+        }
+    }
+
+    .album-data {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+
+        padding: 20px;
+
+        background: map-get($theme, main);
+        background: linear-gradient(0deg, rgba(map-get($theme, main),1) 0%, rgba(map-get($theme, secondary),0.8) 100%);
+
+        img {
+            width: 400px;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .fav-btn-rounded {
+            font-size: xx-large;
+            padding-inline: 20px;
+            padding-block: 10px;
+            border-radius: 50%;
+        }
+
+        & > div {
+            padding: 30px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .al-type {
+                font-family: "GothamMedium", sans-serif;
+                font-size: x-large;
+            }
+
+            .al-name {
+                font-family: "GothamMedium", sans-serif;
+                font-size: xxx-large;
+            }
+        }
+    }
+}
+
+table.tracks {
+
+    padding-inline: 20px;
+
+    tbody {
+
+        tr {
+            border-radius: 4px;
+            padding-block: 10px;
+
+            th {
+                width: 170px;
+            }
+
+            &:hover {
+                background-color: map-get($main, ligther-plus);
+
+                .track-first-index {
+                    span:first-child {
+                        display: none;
+                    }
+
+                    span:last-child {
+                        display: block;
+                    }
+                }
+            }
+
+            .track-first-index {
+                span:first-child {
+                    display: block;
+                    padding-inline: 17.5px;
+                }
+
+                span:last-child {
+                    display: none;
+
+                    .play-btn {
+                        background-color: #0000;
+                        border: none;
+                    }
+                }
+            }
+        }
+
+        &.tbody-no-border-bottom {
+            tr {
+                border-bottom: 0;
+                &>* {
+                    border-bottom: 0;
+                }
+            }
+
+            .like-track-btn {
+                background-color: #0000;
+                border: none;
+
+                i:not(.secondary-color) {
+                    color: #b3b3b3;
+                }
+
+                &:hover i:not(.secondary-color) {
+                    color: white;
+                }
+            }
+        }
+    }
+}

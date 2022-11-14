@@ -1,9 +1,15 @@
 # IDE
 .idea
 
+# un-versioned JS
+public/js/search-main.js
+
+# NodeJS
+node_modules/
+
 # ENV
 .env
 
-#Style
-theme/*.css
-theme/*.map
+# Style (Exceptionnellement je le laisse !)
+#public/theme/*.css
+#public/theme/*.map
